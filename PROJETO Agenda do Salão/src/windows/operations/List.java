@@ -40,11 +40,11 @@ public class List extends DefaultWindow implements MouseListener {
 	private JRadioButton colaboratorButton;
 	private JRadioButton serviceButton;
 	private JRadioButton appointmentButton;
-	private JButton voltarButton = new JButton("Voltar");
-	private JButton editarButton = new JButton("Editar"); 
+	private JButton goBackButton = new JButton("Voltar");
+	private JButton editButton = new JButton("Editar"); 
 	
 	//Colaboradores
-	private JButton desativarButton = new JButton("Desativar"); 
+	private JButton disableButton = new JButton("Desativar"); 
 	
 	private JList<Colaborator> colabList = new JList<>();
 	private DefaultListModel<Colaborator> colabModel =  new DefaultListModel<>();
@@ -58,14 +58,14 @@ public class List extends DefaultWindow implements MouseListener {
 	private JScrollPane servScroll;
 	
 	//Agendamentos
-	private JButton cancelarButton = new JButton("Cancelar"); 
+	private JButton cancelButton = new JButton("Cancelar"); 
 	
 	private JList<Appointment> apptList = new JList<>();
 	private DefaultListModel<Appointment> apptModel =  new DefaultListModel<>();
 	private JScrollPane apptScroll;
 	
-	private JLabel cliente = new JLabel("Cliente");
-	private JLabel data = new JLabel("Data");
+	private JLabel clientLabel = new JLabel("Cliente");
+	private JLabel dateLabel = new JLabel("Data");
 	
 	private JComboBox<Client> clientCombo = new JComboBox<>();
 	private JFormattedTextField dateField = new JFormattedTextField();
@@ -104,9 +104,9 @@ public class List extends DefaultWindow implements MouseListener {
 		colabScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.add(colabScroll);
 		
-		desativarButton.setBounds(250, 370, 100, 20);
-		desativarButton.addActionListener(this);
-		this.add(desativarButton);
+		disableButton.setBounds(250, 370, 100, 20);
+		disableButton.addActionListener(this);
+		this.add(disableButton);
 	}
 	
 	private void servFields() {
@@ -145,17 +145,17 @@ public class List extends DefaultWindow implements MouseListener {
 		apptScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.add(apptScroll);
 		
-		cliente.setBounds(50, 38, 190, 20);
-		cliente.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(cliente);
+		clientLabel.setBounds(50, 38, 190, 20);
+		clientLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(clientLabel);
 		
-		data.setBounds(75, 68, 190, 20);
-		data.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(data);
+		dateLabel.setBounds(75, 68, 190, 20);
+		dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(dateLabel);
 		
-		cancelarButton.setBounds(250, 370, 100, 20);
-		cancelarButton.addActionListener(this);
-		this.add(cancelarButton);
+		cancelButton.setBounds(250, 370, 100, 20);
+		cancelButton.addActionListener(this);
+		this.add(cancelButton);
 		
 		clientCombo.setBounds(110, 40, 210, 20);
 		clientCombo.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -183,10 +183,10 @@ public class List extends DefaultWindow implements MouseListener {
 	
 	private void setColabFieldsVis(boolean b) {
 		colabScroll.setVisible(b);
-		desativarButton.setVisible(b);
+		disableButton.setVisible(b);
 		
 		if(b) {
-			voltarButton.setBounds(30, 370, 100, 20);
+			goBackButton.setBounds(30, 370, 100, 20);
 		}
 
 	}
@@ -196,7 +196,7 @@ public class List extends DefaultWindow implements MouseListener {
 		copyIDButton.setVisible(b);
 		
 		if(b) {
-			voltarButton.setBounds(55, 370, 100, 20);
+			goBackButton.setBounds(55, 370, 100, 20);
 		}
 
 	}
@@ -204,17 +204,17 @@ public class List extends DefaultWindow implements MouseListener {
 	private void setApptFieldsVis(boolean b) {
 		apptScroll.setVisible(b);
 
-		cliente.setVisible(b);
-		data.setVisible(b);
+		clientLabel.setVisible(b);
+		dateLabel.setVisible(b);
 		
 		clientCombo.setVisible(b);
 		dateField.setVisible(b);
 		dateTodayBox.setVisible(b);
 		
-		cancelarButton.setVisible(b);
+		cancelButton.setVisible(b);
 		
 		if(b) {
-			voltarButton.setBounds(30, 370, 100, 20);
+			goBackButton.setBounds(30, 370, 100, 20);
 		}
 
 	}
@@ -223,13 +223,13 @@ public class List extends DefaultWindow implements MouseListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		//Se usuário clicou voltar
-			if(e.getSource().equals(voltarButton)) {
+			if(e.getSource().equals(goBackButton)) {
 				new ControlPanel(getSys(), getDp());
 				this.dispose();
 			}
 			
 			//Se o usuário clicou editar
-			else if(e.getSource().equals(editarButton)) {
+			else if(e.getSource().equals(editButton)) {
 				//e o radio de colaboradores está selecionado
 				if(this.colaboratorButton.isSelected()) {
 					if(this.colabList.getSelectedIndex() == -1) 
@@ -258,7 +258,7 @@ public class List extends DefaultWindow implements MouseListener {
 				}
 			}
 			
-			else if(e.getSource().equals(desativarButton)) {
+			else if(e.getSource().equals(disableButton)) {
 				Colaborator c = this.colabList.getSelectedValue();
 				
 				if(c == null)
@@ -310,7 +310,7 @@ public class List extends DefaultWindow implements MouseListener {
 				}
 			}
 			
-			else if(e.getSource().equals(cancelarButton)) {
+			else if(e.getSource().equals(cancelButton)) {
 				Appointment a = this.apptList.getSelectedValue();
 				
 				if(a == null)
@@ -367,21 +367,21 @@ public class List extends DefaultWindow implements MouseListener {
 				this.setServiceFieldsVis(false);
 				this.setApptFieldsVis(false);
 				
-				editarButton.setVisible(true);
+				editButton.setVisible(true);
 			}
 			else if(e.getSource().equals(this.serviceButton)) {
 				this.setColabFieldsVis(false);
 				this.setServiceFieldsVis(true);
 				this.setApptFieldsVis(false);
 				
-				editarButton.setVisible(false);
+				editButton.setVisible(false);
 			}
 			else if(e.getSource().equals(this.appointmentButton)) {
 				this.setColabFieldsVis(false);
 				this.setServiceFieldsVis(false);
 				this.setApptFieldsVis(true);
 				
-				editarButton.setVisible(true);
+				editButton.setVisible(true);
 			}
 
 	}
@@ -390,9 +390,9 @@ public class List extends DefaultWindow implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource().equals(this.colabList))
 			if(!this.colabList.getSelectedValue().isActive())
-				this.desativarButton.setText("Ativar");
+				this.disableButton.setText("Ativar");
 			else
-				this.desativarButton.setText("Desativar");
+				this.disableButton.setText("Desativar");
 		
 	}
 
@@ -443,12 +443,12 @@ public class List extends DefaultWindow implements MouseListener {
 		appointmentButton.addActionListener(this);
 		this.add(appointmentButton);
 		
-		voltarButton.addActionListener(this);
-		this.add(voltarButton);
+		goBackButton.addActionListener(this);
+		this.add(goBackButton);
 		
-		editarButton.setBounds(140, 370, 100, 20);
-		editarButton.addActionListener(this);
-		this.add(editarButton);
+		editButton.setBounds(140, 370, 100, 20);
+		editButton.addActionListener(this);
+		this.add(editButton);
 		
 		ButtonGroup radioRegister = new ButtonGroup();
 		radioRegister.add(colaboratorButton);

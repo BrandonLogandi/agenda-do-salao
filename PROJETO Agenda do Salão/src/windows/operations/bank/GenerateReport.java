@@ -26,7 +26,7 @@ public class GenerateReport extends DefaultWindow {
 	
 	JLabel colabs = new JLabel("Colaborador:");
 	
-	private JRadioButton salloonReportRadio = new JRadioButton("Caixa do salão", true);
+	private JRadioButton salonReportRadio = new JRadioButton("Caixa do salão", true);
 	private JRadioButton colabReportRadio = new JRadioButton("Caixa de colaborador");
 	private JComboBox<Colaborator> colabCombo = new JComboBox<Colaborator>();
 	
@@ -68,7 +68,7 @@ public class GenerateReport extends DefaultWindow {
 				if(dateBetween.isAfter(dateAnd))
 					JOptionPane.showMessageDialog(this, "Primeira data não pode após a segunda", "Erro", JOptionPane.ERROR_MESSAGE);
 				else {
-					if(this.salloonReportRadio.isSelected())
+					if(this.salonReportRadio.isSelected())
 						ReportGeneration.generateReport(getSys(), dateBetween, dateAnd, null);
 					else
 						ReportGeneration.generateReport(getSys(), dateBetween, dateAnd, colab);
@@ -88,7 +88,7 @@ public class GenerateReport extends DefaultWindow {
 		
 		
 		//Se o usuário clicou os radio buttons do topo
-		else if(e.getSource().equals(salloonReportRadio)) {
+		else if(e.getSource().equals(salonReportRadio)) {
 			this.colabCombo.setEnabled(false);
 			this.colabs.setEnabled(false);
 		}
@@ -155,9 +155,9 @@ public class GenerateReport extends DefaultWindow {
 		generateReportButton.addActionListener(this);
 		this.add(generateReportButton);
 		
-		salloonReportRadio.setBounds(15, 10, 118, 20);
-		salloonReportRadio.addActionListener(this);
-		this.add(salloonReportRadio);
+		salonReportRadio.setBounds(15, 10, 118, 20);
+		salonReportRadio.addActionListener(this);
+		this.add(salonReportRadio);
 		
 		colabReportRadio.setBounds(140, 10, 150, 20);
 		colabReportRadio.addActionListener(this);
@@ -165,7 +165,7 @@ public class GenerateReport extends DefaultWindow {
 		
 		ButtonGroup reportRadioGroup = new ButtonGroup();
 		reportRadioGroup.add(colabReportRadio);
-		reportRadioGroup.add(salloonReportRadio);
+		reportRadioGroup.add(salonReportRadio);
 	}
 
 }

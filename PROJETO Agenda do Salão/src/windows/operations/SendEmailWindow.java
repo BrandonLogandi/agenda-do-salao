@@ -29,8 +29,8 @@ public class SendEmailWindow extends DefaultWindow {
 	
 	private JTextArea messageArea = new JTextArea();
 	
-	private JButton voltar = new JButton("Voltar");
-	private JButton enviar = new JButton("Enviar");
+	private JButton goBackButton = new JButton("Voltar");
+	private JButton sendButton = new JButton("Enviar");
 
 	public SendEmailWindow(DataSystem sys, DataPersistence dp) {
 		super(sys, dp);
@@ -86,19 +86,19 @@ public class SendEmailWindow extends DefaultWindow {
 	}
 	
 	protected void createButtons() {
-		voltar.setBounds(25, 355, 100, 20);
-		voltar.addActionListener(this);
-		this.add(voltar);
+		goBackButton.setBounds(25, 355, 100, 20);
+		goBackButton.addActionListener(this);
+		this.add(goBackButton);
 		
-		enviar.setBounds(460, 355, 100, 20);
-		enviar.addActionListener(this);
-		this.add(enviar);
+		sendButton.setBounds(460, 355, 100, 20);
+		sendButton.addActionListener(this);
+		this.add(sendButton);
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(voltar)) {
+		if(e.getSource().equals(goBackButton)) {
 			this.dispose();
 			new ControlPanel(getSys(), getDp());
 		}
@@ -116,7 +116,7 @@ public class SendEmailWindow extends DefaultWindow {
 			
 		}
 		
-		else if(e.getSource().equals(enviar)) {
+		else if(e.getSource().equals(sendButton)) {
 			switch(this.whoToSendCombo.getSelectedIndex()) {
 			case 0:
 				if(this.getSys().getAllColaborators().size() == 0)

@@ -7,13 +7,13 @@ import system.Appointment;
 public class Client extends Person {
 	
 	private Gender gender;
-	private String tel;
+	private String phoneNumber;
 	private ArrayList<Appointment> appointments = new ArrayList<>();
 
-	public Client(String name, String email, Gender gender, String tel) {
+	public Client(String name, String email, Gender gender, String pn) {
 		super(name, email);
 		this.gender = gender;
-		this.tel = tel;
+		this.phoneNumber = pn;
 	}
 	
 	
@@ -30,7 +30,7 @@ public class Client extends Person {
 		return appointments;
 	}
 	public String getTel() {
-		return tel;
+		return phoneNumber;
 	}
 
 	
@@ -41,7 +41,7 @@ public class Client extends Person {
 		this.appointments = appointments;
 	}
 	public void setTel(String tel) {
-		this.tel = tel;
+		this.phoneNumber = tel;
 	}
 
 

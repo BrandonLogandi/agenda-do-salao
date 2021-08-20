@@ -23,11 +23,11 @@ import windows.operations.bank.Bank;
 
 public class ControlPanel extends DefaultWindow {
 
-	private JButton cadastrar = new JButton("Cadastrar");
-	private JButton listar = new JButton("Listar");
-	private JButton email = new JButton("Enviar email");
-	private JButton caixa = new JButton("Caixa");
-	private JButton sair = new JButton("Sair");
+	private JButton registerButton = new JButton("Cadastrar");
+	private JButton listButton = new JButton("Listar");
+	private JButton emailButton = new JButton("Enviar email");
+	private JButton bankButton = new JButton("Caixa");
+	private JButton logoffButton = new JButton("Sair");
 	
 	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalloonBank().getCash());
 	private JLabel pendingAppts = new JLabel();
@@ -48,22 +48,22 @@ public class ControlPanel extends DefaultWindow {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(sair)) {
+		if(e.getSource().equals(logoffButton)) {
 			new Login(getSys(), getDp());
 			this.dispose();
 		}
 		
-		else if(e.getSource().equals(cadastrar)) {
+		else if(e.getSource().equals(registerButton)) {
 			new Register(getSys(), getDp(), null, null);
 			this.dispose();
 		}
 		
-		else if(e.getSource().equals(listar)) {
+		else if(e.getSource().equals(listButton)) {
 			new List(getSys(), getDp(), true);
 			this.dispose();
 		}
 		
-		else if(e.getSource().equals(email)) {
+		else if(e.getSource().equals(emailButton)) {
 			this.dispose();
 
 			if(this.getSys().getAdmin().getGmailAccount() == null) {
@@ -75,7 +75,7 @@ public class ControlPanel extends DefaultWindow {
 				new SendEmailWindow(getSys(), getDp());	
 		}
 		
-		else if(e.getSource().equals(caixa)) {
+		else if(e.getSource().equals(bankButton)) {
 			new Bank(getSys(), getDp());
 			this.dispose();
 		}
@@ -125,30 +125,30 @@ public class ControlPanel extends DefaultWindow {
 	}
 
 	protected void createButtons() {
-		cadastrar.setFont(new Font("Arial", Font.BOLD, 10));
-		cadastrar.setBounds(20, 140, 90, 20);
-		cadastrar.addActionListener(this);
-		this.add(cadastrar);
+		registerButton.setFont(new Font("Arial", Font.BOLD, 10));
+		registerButton.setBounds(20, 140, 90, 20);
+		registerButton.addActionListener(this);
+		this.add(registerButton);
 		
-		listar.setFont(new Font("Arial", Font.BOLD, 10));
-		listar.setBounds(120, 140, 90, 20);
-		listar.addActionListener(this);
-		this.add(listar);
+		listButton.setFont(new Font("Arial", Font.BOLD, 10));
+		listButton.setBounds(120, 140, 90, 20);
+		listButton.addActionListener(this);
+		this.add(listButton);
 		
-		email.setFont(new Font("Arial", Font.BOLD, 10));
-		email.setBounds(220, 140, 100, 20);
-		email.addActionListener(this);
-		this.add(email);
+		emailButton.setFont(new Font("Arial", Font.BOLD, 10));
+		emailButton.setBounds(220, 140, 100, 20);
+		emailButton.addActionListener(this);
+		this.add(emailButton);
 		
-		caixa.setFont(new Font("Arial", Font.BOLD, 10));
-		caixa.setBounds(330, 140, 100, 20);
-		caixa.addActionListener(this);
-		this.add(caixa);
+		bankButton.setFont(new Font("Arial", Font.BOLD, 10));
+		bankButton.setBounds(330, 140, 100, 20);
+		bankButton.addActionListener(this);
+		this.add(bankButton);
 		
-		sair.setFont(new Font("Arial", Font.BOLD, 10));
-		sair.setBounds(440, 140, 100, 20);
-		sair.addActionListener(this);
-		this.add(sair);
+		logoffButton.setFont(new Font("Arial", Font.BOLD, 10));
+		logoffButton.setBounds(440, 140, 100, 20);
+		logoffButton.addActionListener(this);
+		this.add(logoffButton);
 	}
 
 

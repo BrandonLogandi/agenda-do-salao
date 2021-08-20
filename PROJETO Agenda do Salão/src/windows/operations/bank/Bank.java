@@ -20,7 +20,7 @@ public class Bank extends DefaultWindow {
 	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalloonBank().getCash());
 	private JLabel pendingPay = new JLabel();
 	private float pendingPayTotal = 0;
-	private JButton voltarButton = new JButton("Voltar");
+	private JButton goBackButton = new JButton("Voltar");
 	private JButton payButton = new JButton("Pagar colaborador");
 	private JButton payAllButton = new JButton("Pagar todos");
 	private JButton reportButton = new JButton("Gerar relatório");
@@ -41,7 +41,7 @@ public class Bank extends DefaultWindow {
 
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(this.voltarButton)) {
+		if(e.getSource().equals(this.goBackButton)) {
 			new ControlPanel(getSys(), getDp());
 			this.dispose();
 		}
@@ -120,10 +120,10 @@ public class Bank extends DefaultWindow {
 
 	@Override
 	protected void createButtons() {
-		voltarButton.setBounds(20, 140, 90, 20);
-		voltarButton.setFont(new Font("Arial", Font.BOLD, 10));
-		voltarButton.addActionListener(this);
-		this.add(voltarButton);
+		goBackButton.setBounds(20, 140, 90, 20);
+		goBackButton.setFont(new Font("Arial", Font.BOLD, 10));
+		goBackButton.addActionListener(this);
+		this.add(goBackButton);
 		
 		payButton.setBounds(120, 140, 150, 20);
 		payButton.setFont(new Font("Arial", Font.BOLD, 10));

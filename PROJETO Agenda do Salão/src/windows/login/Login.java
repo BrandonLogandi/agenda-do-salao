@@ -19,9 +19,9 @@ import windows.operations.List;
 public class Login extends DefaultWindow {
 	
 	private JTextField emailField = new JTextField();
-	private JPasswordField senhaField = new JPasswordField();
-	private JButton entrar = new JButton("Entrar");
-	private JButton viewAgenda = new JButton("Ver agendamentos");
+	private JPasswordField passwordField = new JPasswordField();
+	private JButton loginButton = new JButton("Entrar");
+	private JButton viewApptsButton = new JButton("Ver agendamentos");
 	
 	boolean isLoggedIn = false;
 	
@@ -60,26 +60,26 @@ public class Login extends DefaultWindow {
 		emailField.setBounds(140, 50, 170, 20);
 		this.add(emailField);
 		
-		senhaField.setBounds(140, 80, 170, 20);
-		this.add(senhaField);
+		passwordField.setBounds(140, 80, 170, 20);
+		this.add(passwordField);
 	}
 	
 	protected void createButtons() {
-		entrar.setBounds(280, 120, 80, 20);
-		entrar.addActionListener(this);
-		this.add(entrar);
+		loginButton.setBounds(280, 120, 80, 20);
+		loginButton.addActionListener(this);
+		this.add(loginButton);
 		
-		viewAgenda.setBounds(40, 120, 150, 20);
-		viewAgenda.addActionListener(this);
-		this.add(viewAgenda);
+		viewApptsButton.setBounds(40, 120, 150, 20);
+		viewApptsButton.addActionListener(this);
+		this.add(viewApptsButton);
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == this.entrar) {
+		if(e.getSource() == this.loginButton) {
 			if(this.emailField.getText().equals(this.getSys().getAdmin().getEmail()) 
-					&& new String(this.senhaField.getPassword()).equals(new String(this.getSys().getAdmin().getPassword()))) {
+					&& new String(this.passwordField.getPassword()).equals(new String(this.getSys().getAdmin().getPassword()))) {
 				JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + this.getSys().getAdmin().getName());
 				isLoggedIn = true;
 				new ControlPanel(getSys(), getDp());
@@ -88,13 +88,13 @@ public class Login extends DefaultWindow {
 
 			else if(this.emailField.getText().equals(this.getSys().getAdmin().getEmail()) == false)
 				JOptionPane.showMessageDialog(this, "Email inválido", "Erro", JOptionPane.ERROR_MESSAGE);
-			else if(new String(this.senhaField.getPassword()).equals(new String(this.getSys().getAdmin().getPassword())) == false)
+			else if(new String(this.passwordField.getPassword()).equals(new String(this.getSys().getAdmin().getPassword())) == false)
 				JOptionPane.showMessageDialog(this, "Senha inválida", "Erro", JOptionPane.ERROR_MESSAGE);
 			
 
 		}
 		
-		else if(e.getSource().equals(viewAgenda)) {
+		else if(e.getSource().equals(viewApptsButton)) {
 			new List(getSys(), getDp(), false);
 		}
 		

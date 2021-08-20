@@ -39,58 +39,60 @@ public class Register extends DefaultWindow implements KeyListener  {
 	
 	private Colaborator colabEdit = null;
 	private Appointment apptEdit = null;
+	
+	private MaskFormatter phoneNumberFieldMask = null;
 
 	//Botões em comum
 	private JRadioButton colaboratorButton;
 	private JRadioButton serviceButton;
 	private JRadioButton appointmentButton;
-	private JButton cadastrarButton;
-	private JButton voltarButton;
+	private JButton registerButton;
+	private JButton goBackButton;
 	
 	//Colaboradores
-	private JLabel nome = new JLabel("Nome ");
-	private JLabel email = new JLabel("Email ");
-	private JLabel tel = new JLabel("Telefone ");
-	private JLabel sexo = new JLabel("Sexo ");
+	private JLabel nameLabel = new JLabel("Nome ");
+	private JLabel emailLabel = new JLabel("Email ");
+	private JLabel phoneNumberLabel = new JLabel("Telefone ");
+	private JLabel sexLabel = new JLabel("Sexo ");
 	private JRadioButton sexMaleButton = new JRadioButton("Masculino", true);
 	private JRadioButton sexFemButton = new JRadioButton("Feminino");
-	private JLabel servicos = new JLabel("Serviços ");
-	private JLabel precos = new JLabel("Preços ");
-	private JLabel servTip = new JLabel("IDs dos serviços separados por espaço");
-	private JLabel prcTip = new JLabel("Preços dos serviços separados por espaço");
+	private JLabel servicesLabel = new JLabel("Serviços ");
+	private JLabel pricesLabel = new JLabel("Preços ");
+	private JLabel servicesTipLabel = new JLabel("IDs dos serviços separados por espaço");
+	private JLabel pricesTipLabel = new JLabel("Preços dos serviços separados por espaço");
 	
-	private JTextField nomeField = new JTextField();
+	private JTextField nameField = new JTextField();
 	private JTextField emailField = new JTextField();
-	private JFormattedTextField telField = new JFormattedTextField();
-	private JTextField servField = new JTextField();
-	private JTextField prcField = new JTextField();
+	private JFormattedTextField phoneNumberField = new JFormattedTextField();
+	private JTextField serviceField = new JTextField();
+	private JTextField priceField = new JTextField();
 	
 	//Servicos
-	private JLabel nome2 = new JLabel("Nome ");
-	private JLabel desc = new JLabel("Descrição ");
-	private JLabel dur = new JLabel("Dur. média ");
-	private JLabel min = new JLabel("minutos");
-	private JSpinner durSpin = new JSpinner(new SpinnerNumberModel(1, 1, 1440, 1));
+	private JLabel nameLabel2 = new JLabel("Nome ");
+	private JLabel descriptionLabel = new JLabel("Descrição ");
+	private JLabel durationLabel = new JLabel("Dur. média ");
+	private JLabel minutesLabel = new JLabel("minutos");
+	private JSpinner durationSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1440, 1));
 	
-	private JTextField nomeField2 = new JTextField();
-	private JTextField descField = new JTextField();
+	private JTextField nameField2 = new JTextField();
+	private JTextField descriptionField = new JTextField();
 	
 	//Agendamentos
-	private JLabel nome3 = new JLabel("Nome");
-	private JLabel email2 = new JLabel("Email");
-	private JLabel emailTip = new JLabel("Tecle Enter para confirmar o email");
-	private JLabel tel2 = new JLabel("Telefone");
-	private JLabel sexo2 = new JLabel("Sexo");
-	private JLabel svc = new JLabel("Serviço");
-	private JLabel col = new JLabel("Colaborador");
-	private JLabel data = new JLabel("Data");
-	private JLabel hora = new JLabel("Hora");
+	private JLabel nameLabel3 = new JLabel("Nome");
+	private JLabel emailLabel2 = new JLabel("Email");
+	private JLabel emailTipLabel = new JLabel("Tecle Enter para confirmar o email");
+	private JLabel phoneNumberLabel2 = new JLabel("Telefone");
+	private JLabel sexLabel2 = new JLabel("Sexo");
+	private JLabel serviceLabel = new JLabel("Serviço");
+	private JLabel colaboratorLabel = new JLabel("Colaborador");
+	private JLabel dateLabel = new JLabel("Data");
+	private JLabel timeLabel = new JLabel("Hora");
 	
-	private JLabel preco = new JLabel("Preço: R$");
+	private JLabel priceLabel = new JLabel("Preço: R$");
 	
-	private JTextField nomeField3 = new JTextField();
+	private JTextField nameField3 = new JTextField();
 	private JTextField emailField2 = new JTextField();
-	private JFormattedTextField telField2 = new JFormattedTextField();
+	private JFormattedTextField phoneNumberField2 = new JFormattedTextField();
 	private JFormattedTextField dateField = new JFormattedTextField();
 	private JFormattedTextField hourField = new JFormattedTextField();
 	private JRadioButton sexMaleButton2 = new JRadioButton("Masculino", true);
@@ -118,6 +120,12 @@ public class Register extends DefaultWindow implements KeyListener  {
 		this.setSize(400, 450);
 		this.setTitle("Cadastrar");
 		
+		try {
+			phoneNumberFieldMask = new MaskFormatter("(##)#####-####");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		createLabels();
 		createButtons();
 		createFields();
@@ -143,46 +151,40 @@ public class Register extends DefaultWindow implements KeyListener  {
 
 	
 	private void colaboratorFields() {
-		nome.setBounds(20, 45, 150, 40);
-		nome.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(nome);
+		nameLabel.setBounds(20, 45, 150, 40);
+		nameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(nameLabel);
 		
-		email.setBounds(20, 85, 150, 40);
-		email.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(email);
+		emailLabel.setBounds(20, 85, 150, 40);
+		emailLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(emailLabel);
 		
-		tel.setBounds(20, 125, 150, 40);
-		tel.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(tel);
+		phoneNumberLabel.setBounds(20, 125, 150, 40);
+		phoneNumberLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(phoneNumberLabel);
 		
-		sexo.setBounds(20, 165, 150, 40);
-		sexo.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(sexo);
+		sexLabel.setBounds(20, 165, 150, 40);
+		sexLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(sexLabel);
 		
-		servicos.setBounds(20, 205, 150, 40);
-		servicos.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(servicos);
+		servicesLabel.setBounds(20, 205, 150, 40);
+		servicesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(servicesLabel);
 		
-		precos.setBounds(20, 245, 150, 40);
-		precos.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(precos);
+		pricesLabel.setBounds(20, 245, 150, 40);
+		pricesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(pricesLabel);
 		
 		
 		
-		nomeField.setBounds(100, 55, 220, 20);
-		this.add(nomeField);
+		nameField.setBounds(100, 55, 220, 20);
+		this.add(nameField);
 		emailField.setBounds(100, 95, 220, 20);
 		this.add(emailField);
 		
-		MaskFormatter telFieldMask = null;
-		try {
-			telFieldMask = new MaskFormatter("(##)#####-####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		telField = new JFormattedTextField(telFieldMask);
-		telField.setBounds(100, 135, 220, 20);
-		this.add(telField);
+		phoneNumberField = new JFormattedTextField(phoneNumberFieldMask);
+		phoneNumberField.setBounds(100, 135, 220, 20);
+		this.add(phoneNumberField);
 		
 		
 		sexMaleButton.setBounds(100, 173, 100, 20);
@@ -191,37 +193,37 @@ public class Register extends DefaultWindow implements KeyListener  {
 		sexFemButton.setBounds(200, 173, 100, 20);
 		this.add(sexFemButton);
 		
-		servField.setBounds(100, 215, 220, 20);
-		this.add(servField);
+		serviceField.setBounds(100, 215, 220, 20);
+		this.add(serviceField);
 		
-		servTip.setFont(new Font("Arial", Font.ITALIC, 10));
-		servTip.setBounds(120, 230, 220, 20);
-		this.add(servTip);
+		servicesTipLabel.setFont(new Font("Arial", Font.ITALIC, 10));
+		servicesTipLabel.setBounds(120, 230, 220, 20);
+		this.add(servicesTipLabel);
 		
-		prcField.setBounds(100, 255, 220, 20);
-		this.add(prcField);
+		priceField.setBounds(100, 255, 220, 20);
+		this.add(priceField);
 		
-		prcTip.setFont(new Font("Arial", Font.ITALIC, 10));
-		prcTip.setBounds(110, 270, 220, 20);
-		this.add(prcTip);
+		pricesTipLabel.setFont(new Font("Arial", Font.ITALIC, 10));
+		pricesTipLabel.setBounds(110, 270, 220, 20);
+		this.add(pricesTipLabel);
 		
-		ButtonGroup radioSexo = new ButtonGroup();
-		radioSexo.add(sexMaleButton);
-		radioSexo.add(sexFemButton);
+		ButtonGroup sexRadioGroup = new ButtonGroup();
+		sexRadioGroup.add(sexMaleButton);
+		sexRadioGroup.add(sexFemButton);
 		
 		
 		if(colabEdit != null)  {
 			this.setTitle("Editando colaborador");
-			this.cadastrarButton.setText("Salvar");
+			this.registerButton.setText("Salvar");
 			
 			this.colaboratorButton.setVisible(false);
 			this.serviceButton.setVisible(false);
 			this.appointmentButton.setVisible(false);
 			
-			nomeField.setText(colabEdit.getName());
+			nameField.setText(colabEdit.getName());
 			emailField.setText(colabEdit.getEmail());
 			emailField.setEditable(false);
-			telField.setText(colabEdit.getPhoneNumber());
+			phoneNumberField.setText(colabEdit.getPhoneNumber());
 			
 			if(colabEdit.getGender().equals(Gender.MASCULINO)) 
 				this.sexMaleButton.setSelected(true);
@@ -237,8 +239,8 @@ public class Register extends DefaultWindow implements KeyListener  {
 			for(float p:colabEdit.getPrices())
 				svcPrices = svcPrices.concat(String.valueOf(p) + " ");
 				
-			servField.setText(svcIDs);
-			prcField.setText(svcPrices);
+			serviceField.setText(svcIDs);
+			priceField.setText(svcPrices);
 			
 			
 		}
@@ -246,30 +248,30 @@ public class Register extends DefaultWindow implements KeyListener  {
 	}
 
 	private void serviceFields() {
-		nome2.setBounds(40, 130, 150, 40);
-		nome2.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(nome2);
+		nameLabel2.setBounds(40, 130, 150, 40);
+		nameLabel2.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(nameLabel2);
 		
-		desc.setBounds(40, 170, 150, 40);
-		desc.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(desc);
+		descriptionLabel.setBounds(40, 170, 150, 40);
+		descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(descriptionLabel);
 		
-		dur.setBounds(40, 210, 150, 40);
-		dur.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(dur);
+		durationLabel.setBounds(40, 210, 150, 40);
+		durationLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(durationLabel);
 		
-		min.setBounds(180, 210, 150, 40);
-		min.setFont(new Font("Arial", Font.ITALIC, 14));
-		this.add(min);
+		minutesLabel.setBounds(180, 210, 150, 40);
+		minutesLabel.setFont(new Font("Arial", Font.ITALIC, 14));
+		this.add(minutesLabel);
 		
-		durSpin.setBounds(130, 220, 40, 20);
-		this.add(durSpin);
+		durationSpinner.setBounds(130, 220, 40, 20);
+		this.add(durationSpinner);
 		
-		nomeField2.setBounds(130, 140, 190, 20);
-		this.add(nomeField2);
+		nameField2.setBounds(130, 140, 190, 20);
+		this.add(nameField2);
 		
-		descField.setBounds(130, 180, 190, 20);
-		this.add(descField);
+		descriptionField.setBounds(130, 180, 190, 20);
+		this.add(descriptionField);
 		
 	}
 
@@ -287,69 +289,63 @@ public class Register extends DefaultWindow implements KeyListener  {
 		
 		if(colabCombo.getItemAt(0) != null) {
 			price = Validation.formatMoney((colabCombo.getItemAt(0).getPrices().get(0) / 60) * s.getAvrgDuration());
-			preco.setText("Preço: R$" + price);	
+			priceLabel.setText("Preço: R$" + price);	
 		}
 
 		
-		nome3.setBounds(20, 45, 150, 40);
-		nome3.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(nome3);
+		nameLabel3.setBounds(20, 45, 150, 40);
+		nameLabel3.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(nameLabel3);
 		
-		email2.setBounds(20, 85, 150, 40);
-		email2.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(email2);
+		emailLabel2.setBounds(20, 85, 150, 40);
+		emailLabel2.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(emailLabel2);
 		
-		emailTip.setFont(new Font("Arial", Font.ITALIC, 10));
-		emailTip.setBounds(125, 110, 220, 20);
-		this.add(emailTip);
+		emailTipLabel.setFont(new Font("Arial", Font.ITALIC, 10));
+		emailTipLabel.setBounds(125, 110, 220, 20);
+		this.add(emailTipLabel);
 		
-		tel2.setBounds(20, 125, 150, 40);
-		tel2.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(tel2);
+		phoneNumberLabel2.setBounds(20, 125, 150, 40);
+		phoneNumberLabel2.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(phoneNumberLabel2);
 		
-		sexo2.setBounds(20, 165, 150, 40);
-		sexo2.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(sexo2);
+		sexLabel2.setBounds(20, 165, 150, 40);
+		sexLabel2.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(sexLabel2);
 		
-		svc.setBounds(20, 205, 150, 40);
-		svc.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(svc);
+		serviceLabel.setBounds(20, 205, 150, 40);
+		serviceLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(serviceLabel);
 		
-		col.setBounds(20, 245, 150, 40);
-		col.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(col);
+		colaboratorLabel.setBounds(20, 245, 150, 40);
+		colaboratorLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(colaboratorLabel);
 		
-		data.setBounds(20, 285, 150, 40);
-		data.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(data);
+		dateLabel.setBounds(20, 285, 150, 40);
+		dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(dateLabel);
 		
-		hora.setBounds(20, 325, 150, 40);
-		hora.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(hora);
+		timeLabel.setBounds(20, 325, 150, 40);
+		timeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(timeLabel);
 		
-		preco.setBounds(280, 228, 150, 40);
-		preco.setFont(new Font("Arial", Font.PLAIN, 14));
-		this.add(preco);
+		priceLabel.setBounds(280, 228, 150, 40);
+		priceLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+		this.add(priceLabel);
 		
 		
-		nomeField3.setBounds(100, 55, 220, 20);
-		nomeField3.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(nomeField3);
+		nameField3.setBounds(100, 55, 220, 20);
+		nameField3.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(nameField3);
 		
 		emailField2.setBounds(100, 95, 220, 20);
 		emailField2.setFont(new Font("Arial", Font.PLAIN, 16));
 		emailField2.addKeyListener(this);
 		this.add(emailField2);
-		
-		MaskFormatter telFieldMask = null;
-		try {
-			telFieldMask = new MaskFormatter("(##)#####-####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		telField2 = new JFormattedTextField(telFieldMask);
-		telField2.setBounds(100, 135, 220, 20);
-		this.add(telField2);
+
+		phoneNumberField2 = new JFormattedTextField(phoneNumberFieldMask);
+		phoneNumberField2.setBounds(100, 135, 220, 20);
+		this.add(phoneNumberField2);
 		
 		sexMaleButton2.setBounds(100, 173, 100, 20);
 		this.add(sexMaleButton2);
@@ -394,7 +390,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 		
 		if(apptEdit != null) {
 			this.setTitle("Editando agendamento");
-			this.cadastrarButton.setText("Salvar");
+			this.registerButton.setText("Salvar");
 			
 			this.colaboratorButton.setVisible(false);
 			this.serviceButton.setVisible(false);
@@ -414,9 +410,9 @@ public class Register extends DefaultWindow implements KeyListener  {
 				this.colabCombo.addItem(c);
 			this.colabCombo.setSelectedItem(apptEdit.getColaborator());
 			
-			this.nomeField3.setText(apptEdit.getClient().getName());
+			this.nameField3.setText(apptEdit.getClient().getName());
 			this.emailField2.setText(apptEdit.getClient().getEmail());
-			this.telField2.setText(apptEdit.getClient().getTel());
+			this.phoneNumberField2.setText(apptEdit.getClient().getTel());
 			
 			if(apptEdit.getClient().getGender().equals(Gender.MASCULINO)) 
 				this.sexMaleButton2.setSelected(true);
@@ -461,8 +457,8 @@ public class Register extends DefaultWindow implements KeyListener  {
 			this.hourField.setText(hourValue + ":" + minValue);
 			
 			this.existingClient = this.getSys().getClient(this.emailField2.getText());
-			this.nomeField3.setEditable(false);
-			this.telField2.setEditable(false);
+			this.nameField3.setEditable(false);
+			this.phoneNumberField2.setEditable(false);
 			this.sexFemButton2.setEnabled(false);
 			this.sexMaleButton2.setEnabled(false);
 			
@@ -476,51 +472,51 @@ public class Register extends DefaultWindow implements KeyListener  {
 	
 	//Esconder os campos
 	private void setColaboratorFieldsVis(boolean b) {
-		nome.setVisible(b);
-		email.setVisible(b);
-		tel.setVisible(b);
-		sexo.setVisible(b);
+		nameLabel.setVisible(b);
+		emailLabel.setVisible(b);
+		phoneNumberLabel.setVisible(b);
+		sexLabel.setVisible(b);
 		sexMaleButton.setVisible(b);
 		sexFemButton.setVisible(b);
-		servicos.setVisible(b);
-		precos.setVisible(b);
+		servicesLabel.setVisible(b);
+		pricesLabel.setVisible(b);
 		
-		nomeField.setVisible(b);
+		nameField.setVisible(b);
 		emailField.setVisible(b);
-		telField.setVisible(b);
-		servField.setVisible(b);
-		prcField.setVisible(b);
-		servTip.setVisible(b);
-		prcTip.setVisible(b);
+		phoneNumberField.setVisible(b);
+		serviceField.setVisible(b);
+		priceField.setVisible(b);
+		servicesTipLabel.setVisible(b);
+		pricesTipLabel.setVisible(b);
 	}
 	
 	private void setServiceFieldsVis(boolean b) {
-		nome2.setVisible(b);
-		desc.setVisible(b);
-		dur.setVisible(b);
-		min.setVisible(b);
-		durSpin.setVisible(b);
+		nameLabel2.setVisible(b);
+		descriptionLabel.setVisible(b);
+		durationLabel.setVisible(b);
+		minutesLabel.setVisible(b);
+		durationSpinner.setVisible(b);
 		
-		nomeField2.setVisible(b);
-		descField.setVisible(b);
+		nameField2.setVisible(b);
+		descriptionField.setVisible(b);
 	}
 	
 	private void setApptFieldsVis(boolean b) {
-		nome3.setVisible(b);
-		email2.setVisible(b);
-		emailTip.setVisible(b);
-		tel2.setVisible(b);
-		sexo2.setVisible(b);
-		svc.setVisible(b);
-		col.setVisible(b);
-		data.setVisible(b);
-		hora.setVisible(b);
+		nameLabel3.setVisible(b);
+		emailLabel2.setVisible(b);
+		emailTipLabel.setVisible(b);
+		phoneNumberLabel2.setVisible(b);
+		sexLabel2.setVisible(b);
+		serviceLabel.setVisible(b);
+		colaboratorLabel.setVisible(b);
+		dateLabel.setVisible(b);
+		timeLabel.setVisible(b);
 		
-		preco.setVisible(b);
+		priceLabel.setVisible(b);
 		
-		nomeField3.setVisible(b);
+		nameField3.setVisible(b);
 		emailField2.setVisible(b);
-		telField2.setVisible(b);
+		phoneNumberField2.setVisible(b);
 		dateField.setVisible(b);
 		hourField.setVisible(b);
 		sexMaleButton2.setVisible(b);
@@ -537,14 +533,14 @@ public class Register extends DefaultWindow implements KeyListener  {
 		
 		if(existingClient == null) {
 			JOptionPane.showMessageDialog(this, "Cliente não encontrado", "", JOptionPane.INFORMATION_MESSAGE);
-			this.nomeField3.setEditable(true);
-			this.telField2.setEditable(true);
+			this.nameField3.setEditable(true);
+			this.phoneNumberField2.setEditable(true);
 			this.sexFemButton2.setEnabled(true);
 			this.sexMaleButton2.setEnabled(true);
 		}
 		else {
-			this.nomeField3.setText(existingClient.getName());
-			this.telField2.setText(existingClient.getTel());
+			this.nameField3.setText(existingClient.getName());
+			this.phoneNumberField2.setText(existingClient.getTel());
 			
 			switch(existingClient.getGender()) {
 			case FEMININO:
@@ -555,8 +551,8 @@ public class Register extends DefaultWindow implements KeyListener  {
 				break;
 			}
 			
-			this.nomeField3.setEditable(false);
-			this.telField2.setEditable(false);
+			this.nameField3.setEditable(false);
+			this.phoneNumberField2.setEditable(false);
 			this.sexFemButton2.setEnabled(false);
 			this.sexMaleButton2.setEnabled(false);
 		}
@@ -574,18 +570,18 @@ public class Register extends DefaultWindow implements KeyListener  {
 	
 	public void actionPerformed(ActionEvent e) {
 		//Se usuário clicou voltar
-		if(e.getSource().equals(voltarButton)) 
+		if(e.getSource().equals(goBackButton)) 
 			goBack();
 		
 		
 		//Se usuário clicou cadastrar
-		else if(e.getSource().equals(cadastrarButton)) {
+		else if(e.getSource().equals(registerButton)) {
 			//Se usuário clicou cadastrar e o RadioButton de colaborador está selecionado, cadastre colaborador
 			if(this.colaboratorButton.isSelected()) {
 				
 				//Arrays pra armazenar o que o usuário digitou e ArrayLists pra armazenar os valores corretos
-				String[] servicesID = this.servField.getText().split(" ");
-				String[] prices = this.prcField.getText().split(" ");
+				String[] servicesID = this.serviceField.getText().split(" ");
+				String[] prices = this.priceField.getText().split(" ");
 				ArrayList<Service> servicesArray = null;
 				ArrayList<Float> pricesArray = null;
 				Gender g = null;
@@ -594,9 +590,9 @@ public class Register extends DefaultWindow implements KeyListener  {
 				
 				//Validar tudo
 				try {
-					Validation.validateName(this.nomeField.getText(), false);
+					Validation.validateName(this.nameField.getText(), false);
 					Validation.validateEmail(this.emailField.getText());
-					Validation.validatePhoneNumber(this.telField.getText());
+					Validation.validatePhoneNumber(this.phoneNumberField.getText());
 					
 					servicesArray = Validation.validateIDs(servicesID, this.getSys().getAllServices());
 					pricesArray = Validation.validatePrices(servicesID, prices);
@@ -620,9 +616,9 @@ public class Register extends DefaultWindow implements KeyListener  {
 									throw new Exception("Não é possível remover o servico " + a.getService().getID()
 											+ "\n" + colabEdit.getName() + " possui um agendamento ativo com esse serviço");
 
-							colabEdit.setName(this.nomeField.getText());
+							colabEdit.setName(this.nameField.getText());
 							colabEdit.setGender(g);
-							colabEdit.setPhoneNumber(this.telField.getText());
+							colabEdit.setPhoneNumber(this.phoneNumberField.getText());
 							
 							//Remove o colaborador de todos os serviços e o adiciona de volta aos serviços que o usuário digitou
 							for(Service s:this.getSys().getAllServices()) {
@@ -640,7 +636,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 							JOptionPane.showMessageDialog(this, "Colaborador editado com sucesso");
 						}
 						else {
-							Colaborator c = new Colaborator(this.nomeField.getText(), this.emailField.getText(), g, this.telField.getText(), servicesArray, pricesArray);
+							Colaborator c = new Colaborator(this.nameField.getText(), this.emailField.getText(), g, this.phoneNumberField.getText(), servicesArray, pricesArray);
 							for(Service s:servicesArray) 
 								s.getColaborators().add(c);
 							
@@ -664,15 +660,15 @@ public class Register extends DefaultWindow implements KeyListener  {
 				
 				//Validar nome e descrição
 				try {
-					Validation.validateName(this.nomeField2.getText(), false);
-					Validation.validateName(this.descField.getText(), true);
+					Validation.validateName(this.nameField2.getText(), false);
+					Validation.validateName(this.descriptionField.getText(), true);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(this, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 					canContinue = false;
 				}
 				
 				if(canContinue) {
-					Service s = new Service(this.nomeField2.getText(), this.descField.getText(), (int) this.durSpin.getValue());
+					Service s = new Service(this.nameField2.getText(), this.descriptionField.getText(), (int) this.durationSpinner.getValue());
 					try {
 						this.getSys().addService(s);
 						this.getDp().saveSystem(getSys());
@@ -710,10 +706,10 @@ public class Register extends DefaultWindow implements KeyListener  {
 						clt = this.existingClient;
 					else
 						try {
-							Validation.validateName(this.nomeField3.getText(), false);
+							Validation.validateName(this.nameField3.getText(), false);
 							Validation.validateEmail(this.emailField2.getText());
-							Validation.validatePhoneNumber(this.telField2.getText());
-							clt = new Client(this.nomeField3.getText(), this.emailField2.getText(), g, this.telField2.getText());
+							Validation.validatePhoneNumber(this.phoneNumberField2.getText());
+							clt = new Client(this.nameField3.getText(), this.emailField2.getText(), g, this.phoneNumberField2.getText());
 						} catch (Exception e1) {
 							JOptionPane.showMessageDialog(this, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 						}
@@ -811,7 +807,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 						break;
 					}
 			
-			preco.setText("Preço: R$" + price);
+			priceLabel.setText("Preço: R$" + price);
 			
 		}
 		
@@ -886,15 +882,15 @@ public class Register extends DefaultWindow implements KeyListener  {
 		appointmentButton.addActionListener(this);
 		this.add(appointmentButton);
 		
-		voltarButton = new JButton("Voltar");
-		voltarButton.setBounds(60, 370, 100, 20);
-		voltarButton.addActionListener(this);
-		this.add(voltarButton);
+		goBackButton = new JButton("Voltar");
+		goBackButton.setBounds(60, 370, 100, 20);
+		goBackButton.addActionListener(this);
+		this.add(goBackButton);
 		
-		cadastrarButton = new JButton("Cadastrar");
-		cadastrarButton.setBounds(220, 370, 100, 20);
-		cadastrarButton.addActionListener(this);
-		this.add(cadastrarButton);
+		registerButton = new JButton("Cadastrar");
+		registerButton.setBounds(220, 370, 100, 20);
+		registerButton.addActionListener(this);
+		this.add(registerButton);
 		
 		ButtonGroup radioRegister = new ButtonGroup();
 		radioRegister.add(colaboratorButton);

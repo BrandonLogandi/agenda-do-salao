@@ -24,8 +24,8 @@ public class PaySingleColabs extends DefaultWindow implements MouseListener {
 	private JLabel total = new JLabel("A pagar: R$");
 	private float totalPay = 0;
 	
-	private JButton voltarButton = new JButton("Voltar");
-	private JButton pagarButton = new JButton("Pagar"); 
+	private JButton goBackButton = new JButton("Voltar");
+	private JButton payButton = new JButton("Pagar"); 
 	
 	private JList<Colaborator> colabList = new JList<>();
 	private DefaultListModel<Colaborator> colabModel =  new DefaultListModel<>();
@@ -66,11 +66,11 @@ public class PaySingleColabs extends DefaultWindow implements MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(this.voltarButton)) {
+		if(e.getSource().equals(this.goBackButton)) {
 			new Bank(getSys(), getDp());
 			this.dispose();
 		}
-		else if(e.getSource().equals(this.pagarButton)) {
+		else if(e.getSource().equals(this.payButton)) {
 			this.dispose();
 			if(this.colabList.getSelectedValue() == null)
 				JOptionPane.showMessageDialog(this, "Você deve selecionar o colaborador a pagar", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -151,13 +151,13 @@ public class PaySingleColabs extends DefaultWindow implements MouseListener {
 
 	@Override
 	protected void createButtons() {
-		voltarButton.setBounds(60, 370, 100, 20);
-		voltarButton.addActionListener(this);
-		this.add(voltarButton);
+		goBackButton.setBounds(60, 370, 100, 20);
+		goBackButton.addActionListener(this);
+		this.add(goBackButton);
 		
-		pagarButton.setBounds(220, 370, 100, 20);
-		pagarButton.addActionListener(this);
-		this.add(pagarButton);
+		payButton.setBounds(220, 370, 100, 20);
+		payButton.addActionListener(this);
+		this.add(payButton);
 	}
 
 }

@@ -24,9 +24,9 @@ import windows.operations.SendEmailWindow;
 public class LoginWithGoogle extends DefaultWindow {
 	
 	private JTextField emailField = new JTextField();
-	private JPasswordField senhaField = new JPasswordField();
-	private JButton entrar = new JButton("Entrar");
-	private JButton voltar = new JButton("Voltar");
+	private JPasswordField passwordField = new JPasswordField();
+	private JButton loginButton = new JButton("Entrar");
+	private JButton goBackButton = new JButton("Voltar");
 
 	public LoginWithGoogle(DataSystem sys, DataPersistence dp) {
 		super(sys, dp);
@@ -43,13 +43,13 @@ public class LoginWithGoogle extends DefaultWindow {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(voltar)) {
+		if(e.getSource().equals(goBackButton)) {
 			new ControlPanel(getSys(), getDp());
 			this.dispose();
 		}
-		else if(e.getSource().equals(entrar)) {
+		else if(e.getSource().equals(loginButton)) {
 			this.getSys().getAdmin().setGmailAccount(
-					new GmailAccount(this.emailField.getText().concat("@gmail.com"), new String(this.senhaField.getPassword())));
+					new GmailAccount(this.emailField.getText().concat("@gmail.com"), new String(this.passwordField.getPassword())));
 			this.getDp().saveSystem(getSys());
 			this.dispose();
 			
@@ -94,18 +94,18 @@ public class LoginWithGoogle extends DefaultWindow {
 		emailField.setBounds(140, 50, 110, 20);
 		this.add(emailField);
 		
-		senhaField.setBounds(140, 80, 190, 20);
-		this.add(senhaField);
+		passwordField.setBounds(140, 80, 190, 20);
+		this.add(passwordField);
 	}
 
 	protected void createButtons() {
-		entrar.setBounds(250, 120, 80, 20);
-		entrar.addActionListener(this);
-		this.add(entrar);
+		loginButton.setBounds(250, 120, 80, 20);
+		loginButton.addActionListener(this);
+		this.add(loginButton);
 		
-		voltar.setBounds(80, 120, 80, 20);
-		voltar.addActionListener(this);
-		this.add(voltar);
+		goBackButton.setBounds(80, 120, 80, 20);
+		goBackButton.addActionListener(this);
+		this.add(goBackButton);
 	}
 
 }

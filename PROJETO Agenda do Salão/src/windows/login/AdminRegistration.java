@@ -16,9 +16,9 @@ import windows.DefaultWindow;
 
 public class AdminRegistration extends DefaultWindow {
 	
-	private JTextField nomeField = null;
+	private JTextField nameField = null;
 	private JTextField emailField = null;
-	private JPasswordField senhaField = null;
+	private JPasswordField passwordField = null;
 	
 	public AdminRegistration(DataSystem sys, DataPersistence dp) {
 		super(sys, dp);
@@ -52,17 +52,17 @@ public class AdminRegistration extends DefaultWindow {
 	}
 
 	protected void createFields() {
-		nomeField = new JTextField();
-		nomeField.setBounds(90, 50, 150, 20);
-		this.add(nomeField);
+		nameField = new JTextField();
+		nameField.setBounds(90, 50, 150, 20);
+		this.add(nameField);
 		
 		emailField = new JTextField();
 		emailField.setBounds(90, 90, 150, 20);
 		this.add(emailField);
 		
-		senhaField = new JPasswordField();
-		senhaField.setBounds(90, 130, 150, 20);
-		this.add(senhaField);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(90, 130, 150, 20);
+		this.add(passwordField);
 	}
 
 	@Override
@@ -76,11 +76,11 @@ public class AdminRegistration extends DefaultWindow {
 	
 	public void actionPerformed(ActionEvent e) {
 		try {
-			Validation.validateName(this.nomeField.getText(), false);
+			Validation.validateName(this.nameField.getText(), false);
 			Validation.validateEmail(this.emailField.getText());
-			Validation.validatePassword(this.senhaField.getPassword());
+			Validation.validatePassword(this.passwordField.getPassword());
 			
-			this.getSys().setAdmin(new Administrator(this.nomeField.getText(), this.emailField.getText(), new String(this.senhaField.getPassword())));
+			this.getSys().setAdmin(new Administrator(this.nameField.getText(), this.emailField.getText(), new String(this.passwordField.getPassword())));
 			this.getDp().saveSystem(this.getSys());
 			
 			new Login(this.getSys(), this.getDp());
