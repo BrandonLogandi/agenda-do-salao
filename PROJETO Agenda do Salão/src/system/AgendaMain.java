@@ -17,7 +17,7 @@ import windows.operations.bank.Bank;
 import windows.operations.bank.GenerateReport;
 import windows.operations.bank.PaySingleColabs;
 
-public class Main {
+public class AgendaMain {
 
 	public static void main(String[] args) {
 		DataPersistence dp = new DataPersistence();
