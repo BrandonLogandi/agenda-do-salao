@@ -105,7 +105,11 @@ public class SendEmailWindow extends DefaultWindow {
 		
 		else if(e.getSource().equals(whoToSendCombo)) {
 			switch(this.whoToSendCombo.getSelectedIndex()) {
-			case 0, 1:
+			case 0:
+				this.otherEmailLabel.setEnabled(false);
+				this.otherEmailField.setEnabled(false);
+				break;
+			case 1:
 				this.otherEmailLabel.setEnabled(false);
 				this.otherEmailField.setEnabled(false);
 				break;
