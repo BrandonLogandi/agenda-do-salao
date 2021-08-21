@@ -19,14 +19,13 @@ public class DataPersistence {
 		try {
 			f.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(f);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -50,6 +49,7 @@ public class DataPersistence {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+			System.out.println("System loaded");
 			return (DataSystem) xstream.fromXML(fis);
 		}
 	}

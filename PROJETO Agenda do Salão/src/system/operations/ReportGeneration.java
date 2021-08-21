@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.text.DateFormatter;
 
@@ -23,13 +24,17 @@ import system.bank.Transaction;
 
 public abstract class ReportGeneration {
 	
+	private static LocalDate dateBetween1 = null;
+	private static LocalDate dateAnd1 = null;
+	private static PdfPTable table = null;
+	
 	public static void generateReport(DataSystem sys, LocalDate dateBetween, LocalDate dateAnd, Colaborator colab) throws Exception {
 		if(colab != null) {
 			if(colab.getBank().getTransactions().isEmpty())
 				throw new Exception("Não foi realizada nenhuma transação para esse colaborador");
 		}
 		
-		else if(sys.getSalloonBank().getTransactions().isEmpty())
+		else if(sys.getSalonBank().getTransactions().isEmpty())
 			throw new Exception("Não foi realizada nenhuma transação no caixa do salão");
 
 		Document doc = new Document(PageSize.A4);
@@ -42,7 +47,7 @@ public abstract class ReportGeneration {
 		data.setColspan(1);
 		recebedor.setColspan(1);
 		
-		PdfPTable table = null;
+		
 		if(colab == null)
 			table = new PdfPTable(4);
 		else
@@ -84,33 +89,20 @@ public abstract class ReportGeneration {
 		pg.setAlignment(Element.ALIGN_CENTER);
 		doc.add(pg);
 			
-		dateBetween = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue(), dateBetween.getDayOfMonth() - 1);
-		dateAnd = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue(), dateAnd.getDayOfMonth() + 1);
+		dateBetween1 = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue(), dateBetween.getDayOfMonth() - 1);
+		dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue(), dateAnd.getDayOfMonth() + 1);
 		
 		
 		if(colab != null) {
-			for(Transaction t:colab.getBank().getTransactions()) {
-				if(t.getDate().toLocalDate().isBefore(dateAnd) && t.getDate().toLocalDate().isAfter(dateBetween)) {
-					if(t.getMoney() < 0)
-						table.addCell("Retirada");
-					else
-						table.addCell("Depósito");
-					
-					table.addCell("R$" + String.valueOf(t.getMoney()));
-					table.addCell(t.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
-				}
-			}
+			for(Transaction t:colab.getBank().getTransactions()) 
+				if(t.getDate().toLocalDate().isBefore(dateAnd1) && t.getDate().toLocalDate().isAfter(dateBetween1)) 
+					addInfoToTable(t);
 		}
+		
 		else {
-			for(Transaction t:sys.getSalloonBank().getTransactions()) {
+			for(Transaction t:sys.getSalonBank().getTransactions()) {
 				if(t.getDate().toLocalDate().isBefore(dateAnd) && t.getDate().toLocalDate().isAfter(dateBetween)) {
-					if(t.getMoney() < 0)
-						table.addCell("Retirada");
-					else
-						table.addCell("Depósito");
-					
-					table.addCell("R$" + String.valueOf(t.getMoney()));
-					table.addCell(t.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+					addInfoToTable(t);
 					
 					if(t.getReceiver() != null)
 						table.addCell(t.getReceiver().getName());
@@ -125,6 +117,17 @@ public abstract class ReportGeneration {
 		
 		Desktop desktop = Desktop.getDesktop();
 		desktop.open(new File("relatorio.pdf"));
+	}
+	
+	
+	private static void addInfoToTable(Transaction t) {
+			if(t.getMoney() < 0)
+				table.addCell("Retirada");
+			else
+				table.addCell("Depósito");
+			
+			table.addCell("R$" + String.valueOf(t.getMoney()));
+			table.addCell(t.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
 	}
 
 }

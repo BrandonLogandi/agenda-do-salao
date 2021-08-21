@@ -2,7 +2,6 @@ package system;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 import people.Client;
 import people.Colaborator;
@@ -63,7 +62,6 @@ public class Appointment {
 	public void setService(Service service) {
 		this.service = service;
 	}
-
 	public void setClient(Client client) {
 		this.client = client;
 	}

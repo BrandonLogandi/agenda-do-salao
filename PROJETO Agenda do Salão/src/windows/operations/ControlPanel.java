@@ -29,7 +29,7 @@ public class ControlPanel extends DefaultWindow {
 	private JButton bankButton = new JButton("Caixa");
 	private JButton logoffButton = new JButton("Sair");
 	
-	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalloonBank().getCash());
+	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalonBank().getCash());
 	private JLabel pendingAppts = new JLabel();
 	private JLabel availableColabs = new JLabel();
 

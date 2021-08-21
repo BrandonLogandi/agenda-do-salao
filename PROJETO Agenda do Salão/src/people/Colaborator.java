@@ -63,9 +63,6 @@ public class Colaborator extends Person {
 	public void setPrices(ArrayList<Float> prices) {
 		this.prices = prices;
 	}
-	public void setAppointments(ArrayList<Appointment> appointments) {
-		this.appointments = appointments;
-	}
 	
 	
 	public boolean isActive() {

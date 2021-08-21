@@ -81,16 +81,17 @@ public class PaySingleColabs extends DefaultWindow implements MouseListener {
 						"Você está prestes a pagar R$" + this.totalPay + " a " + c.getName(), 
 						"Tem certeza?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE)) {
 				case JOptionPane.YES_OPTION:
-					this.getSys().getSalloonBank().removeCash(totalPay, c);
+					this.getSys().getSalonBank().removeCash(totalPay, c);
 					c.getBank().addCash(totalPay, c);
 					c.setPendingPay(0);
 					
-					SendEmail.sendToColab(this.getSys().getAdmin(), c, "Pagamento recebido",
-							"Prezado(a) " + c.getName() + ":"
-							+ "\nForam depositados R$" + totalPay + " em sua conta");
+					if(this.getSys().getAdmin().getGmailAccount() != null)
+						SendEmail.sendToColab(this.getSys().getAdmin(), c, "Pagamento recebido",
+								"Prezado(a) " + c.getName() + ":"
+								+ "\nForam depositados R$" + totalPay + " em sua conta");
 					
 					JOptionPane.showMessageDialog(this, c.getName() + " foi pago"
-							+ "\nSobram R$" + this.getSys().getSalloonBank().getCash() + " no caixa do salão", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+							+ "\nSobram R$" + this.getSys().getSalonBank().getCash() + " no caixa do salão", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 					this.getDp().saveSystem(getSys());
 				}
 			}

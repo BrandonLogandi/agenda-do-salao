@@ -20,7 +20,7 @@ public class DataSystem {
 	private ArrayList<Client> allClients = new ArrayList<>();
 	private ArrayList<Appointment> allAppointments = new ArrayList<>();
 	
-	private Bank salloonBank = new Bank();
+	private Bank salonBank = new Bank();
 	
 	
 	public void addColaborator(Colaborator c) throws Exception {
@@ -36,14 +36,6 @@ public class DataSystem {
 			allColaborators.add(c);
 		
 	}
-	public Colaborator getColaborator(String email) {
-		for(Colaborator c:allColaborators) 
-			if(c.getEmail().equals(email)) 
-				return c;
-		
-		return null;
-	}
-	
 	public void addService(Service s) throws Exception {
 		if(!allServices.isEmpty()) {
 			for(Service svc:allServices) 
@@ -57,17 +49,10 @@ public class DataSystem {
 			allServices.add(s);
 
 	}
-	public Service getService(long ID) {
-		for(Service s:allServices) 
-			if(s.getID() == ID)
-				return s;
-		
-		return null;
-	}
-	
 	public void addClient(Client c) {
 		this.allClients.add(c);	
 	}
+	
 	public Client getClient (String email) {
 		for(Client c:this.allClients) 
 			if(c.getEmail().equals(email)) 
@@ -103,30 +88,17 @@ public class DataSystem {
 	public ArrayList<Appointment> getAllAppointments() {
 		return allAppointments;
 	}
+	public Bank getSalonBank() {
+		return salonBank;
+	}
+	
 	
 	public void setAdmin(Administrator a) {
 		this.admin = a;
 		JOptionPane.showMessageDialog(null, "Admin criado", "", JOptionPane.INFORMATION_MESSAGE);
 	}
-	public void setAllColaborators(ArrayList<Colaborator> allColaborators) {
-		this.allColaborators = allColaborators;
-	}
-	public void setAllServices(ArrayList<Service> allServices) {
-		this.allServices = allServices;
-	}
-	public void setAllClients(ArrayList<Client> allClients) {
-		this.allClients = allClients;
-	}
-	public void setAllAppointments(ArrayList<Appointment> allAppointments) {
-		this.allAppointments = allAppointments;
-	}
-	
-	
-	public Bank getSalloonBank() {
-		return salloonBank;
-	}
-	public void setSalloonBank(Bank salloonBank) {
-		this.salloonBank = salloonBank;
-	}
+
+
+
 	
 }

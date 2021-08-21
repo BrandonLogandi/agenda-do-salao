@@ -17,7 +17,6 @@ public class Client extends Person {
 	}
 	
 	
-	@Override
 	public String toString() {
 		return super.getName() + " " + super.getEmail();
 	}
@@ -29,25 +28,8 @@ public class Client extends Person {
 	public ArrayList<Appointment> getAppointments() {
 		return appointments;
 	}
-	public String getTel() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-
-	
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-	public void setAppointments(ArrayList<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-	public void setTel(String tel) {
-		this.phoneNumber = tel;
-	}
-
-
-
-
-	
-
 
 }

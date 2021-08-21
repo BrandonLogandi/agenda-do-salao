@@ -17,7 +17,7 @@ import windows.operations.ControlPanel;
 
 public class Bank extends DefaultWindow {
 	
-	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalloonBank().getCash());
+	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalonBank().getCash());
 	private JLabel pendingPay = new JLabel();
 	private float pendingPayTotal = 0;
 	private JButton goBackButton = new JButton("Voltar");
@@ -59,20 +59,21 @@ public class Bank extends DefaultWindow {
 		else if(e.getSource().equals(payAllButton)) {
 			this.dispose();
 			int opt = JOptionPane.showOptionDialog(this, "Tem certeza de que quer pagar todos os colaboradores?"
-					+ "\nApós essa operação, sobrarão R$" + (this.getSys().getSalloonBank().getCash() - pendingPayTotal) + " no caixa", 
+					+ "\nApós essa operação, sobrarão R$" + (this.getSys().getSalonBank().getCash() - pendingPayTotal) + " no caixa", 
 					"Tem certeza?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 			
 			if(opt == JOptionPane.YES_OPTION) {
 				for(Colaborator c:this.getSys().getAllColaborators()) {
 					if(c.getPendingPay() != 0) {
 						float totalPay = c.getPendingPay();
-						this.getSys().getSalloonBank().removeCash(totalPay, c);
+						this.getSys().getSalonBank().removeCash(totalPay, c);
 						c.getBank().addCash(totalPay, c);
 						c.setPendingPay(0);
 						
-						SendEmail.sendToColab(this.getSys().getAdmin(), c, "Pagamento recebido",
-								"Prezado(a) " + c.getName() + ":"
-								+ "\n Foram depositados R$" + totalPay + " em sua conta");
+						if(this.getSys().getAdmin().getGmailAccount() != null)
+							SendEmail.sendToColab(this.getSys().getAdmin(), c, "Pagamento recebido",
+									"Prezado(a) " + c.getName() + ":"
+									+ "\n Foram depositados R$" + totalPay + " em sua conta");
 						
 						this.getDp().saveSystem(getSys());
 					}

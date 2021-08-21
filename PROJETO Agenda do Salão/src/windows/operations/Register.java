@@ -118,7 +118,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 		this.colabEdit = colabEdit;
 		this.apptEdit = apptEdit;
 
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.setSize(400, 450);
 		this.setTitle("Cadastrar");
 		
@@ -412,7 +412,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 			
 			this.nameField3.setText(apptEdit.getClient().getName());
 			this.emailField2.setText(apptEdit.getClient().getEmail());
-			this.phoneNumberField2.setText(apptEdit.getClient().getTel());
+			this.phoneNumberField2.setText(apptEdit.getClient().getPhoneNumber());
 			
 			if(apptEdit.getClient().getGender().equals(Gender.MASCULINO)) 
 				this.sexMaleButton2.setSelected(true);
@@ -542,7 +542,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 		}
 		else {
 			this.nameField3.setText(existingClient.getName());
-			this.phoneNumberField2.setText(existingClient.getTel());
+			this.phoneNumberField2.setText(existingClient.getPhoneNumber());
 			
 			switch(existingClient.getGender()) {
 			case FEMININO:
@@ -751,7 +751,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 									float formattedMoney = Validation.formatMoney(apptEdit.getPrice());
 									
 									JOptionPane.showMessageDialog(this, "Foram adicionados R$" + formattedMoney + " ao caixa do salão", "Transação", JOptionPane.INFORMATION_MESSAGE);
-									this.getSys().getSalloonBank().addCash(formattedMoney, null);
+									this.getSys().getSalonBank().addCash(formattedMoney, null);
 									
 									c.setPendingPay(Validation.formatMoney((float) (apptEdit.getPrice() * 0.8)));
 								}

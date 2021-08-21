@@ -13,13 +13,10 @@ public class Bank {
 	public float getCash() {
 		return cash;
 	}
-	
 	public ArrayList<Transaction> getTransactions() {
 		return transactions;
 	}
-	public void setTransactions(ArrayList<Transaction> changes) {
-		this.transactions = changes;
-	}
+
 	
 	public void addCash(float cash, Person receiver) {
 		this.cash += cash;

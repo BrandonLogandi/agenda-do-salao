@@ -36,6 +36,7 @@ public class SendEmailWindow extends DefaultWindow {
 		super(sys, dp);
 		this.setSize(600, 430);
 		this.setTitle("Enviar email");
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 		createLabels();
 		createButtons();
