@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import system.operations.DataPersistence;
 import system.operations.DataSystem;
+import system.operations.Validation;
 import windows.DefaultWindow;
 import windows.operations.ControlPanel;
 import windows.operations.List;
@@ -96,6 +97,7 @@ public class Login extends DefaultWindow {
 		
 		else if(e.getSource().equals(viewApptsButton)) {
 			new List(getSys(), getDp(), false);
+			this.dispose();
 		}
 		
 	}

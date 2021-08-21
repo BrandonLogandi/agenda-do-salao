@@ -151,7 +151,7 @@ public class SendEmailWindow extends DefaultWindow {
 							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
 						
 						if(i > 1)
-							JOptionPane.showMessageDialog(null, "Mensagens enviads");
+							JOptionPane.showMessageDialog(null, "Mensagens enviadas");
 						else
 							JOptionPane.showMessageDialog(null, "Mensagem enviada");
 						

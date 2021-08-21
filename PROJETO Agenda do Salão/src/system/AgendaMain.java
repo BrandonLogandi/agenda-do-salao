@@ -28,6 +28,8 @@ public class AgendaMain {
 		else
 			new Login(sys, dp);
 		
+//		new List(sys, dp, false);
+		
 //		new ControlPanel(sys, dp);
 //		new Register(sys, dp, false, false, 0);
 //		new List(sys, dp, true);

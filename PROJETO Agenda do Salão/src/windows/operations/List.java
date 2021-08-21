@@ -5,9 +5,12 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
+import java.time.LocalDate;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
@@ -29,12 +32,17 @@ import people.Client;
 import people.Colaborator;
 import system.Appointment;
 import system.Service;
+import system.exceptions.InvalidDateException;
 import system.operations.DataPersistence;
 import system.operations.DataSystem;
 import system.operations.SendEmail;
+import system.operations.Validation;
 import windows.DefaultWindow;
+import windows.login.Login;
 
-public class List extends DefaultWindow implements MouseListener {
+public class List extends DefaultWindow implements MouseListener, KeyListener {
+	
+	private boolean isLoggedIn;
 	
 	//Botões em comum
 	private JRadioButton colaboratorButton;
@@ -64,8 +72,8 @@ public class List extends DefaultWindow implements MouseListener {
 	private DefaultListModel<Appointment> apptModel =  new DefaultListModel<>();
 	private JScrollPane apptScroll;
 	
-	private JLabel clientLabel = new JLabel("Cliente");
-	private JLabel dateLabel = new JLabel("Data");
+	private JLabel clientLabel;
+	private JLabel dateLabel;
 	
 	private JComboBox<Client> clientCombo = new JComboBox<>();
 	private JFormattedTextField dateField = new JFormattedTextField();
@@ -77,17 +85,35 @@ public class List extends DefaultWindow implements MouseListener {
 	public List(DataSystem sys, DataPersistence dp, boolean isLoggedIn) {
 		super(sys, dp);
 		this.setSize(400, 450);
-		this.setTitle("Listar");
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.isLoggedIn = isLoggedIn;
+		
+		if(isLoggedIn)
+			this.setTitle("Listar");
+		else
+			this.setTitle("Listar por data");
 		
 		createLabels();
-		createButtons();
 		createFields();
-
-
+		createButtons();
+		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
+	}
+	
+	private void validateInputDate() {
+		try {
+			LocalDate ld = Validation.validateDate(this.dateField.getText(), true, false);
+			
+			this.apptModel.removeAllElements();
+			for(Appointment a:this.getSys().getAllAppointments()) 
+				if(a.getDate().isEqual(ld))
+					this.apptModel.addElement(a);
+			
+		} catch (InvalidDateException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	
@@ -128,40 +154,6 @@ public class List extends DefaultWindow implements MouseListener {
 	}
 	
 	private void apptFields() {
-		for(int i = 0; i < this.getSys().getAllAppointments().size(); i++) 
-			this.apptModel.add(i, this.getSys().getAllAppointments().get(i));
-		
-		this.apptList.setModel(apptModel);
-		this.apptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		
-		this.clientCombo.addItem(new Client("Todos", "", null, null));
-		for(Client c:this.getSys().getAllClients())
-			this.clientCombo.addItem(c);
-	
-		
-		apptScroll = new JScrollPane(apptList);
-		apptScroll.setBounds(40, 100, 300, 240);
-		apptScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		this.add(apptScroll);
-		
-		clientLabel.setBounds(50, 38, 190, 20);
-		clientLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(clientLabel);
-		
-		dateLabel.setBounds(75, 68, 190, 20);
-		dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-		this.add(dateLabel);
-		
-		cancelButton.setBounds(250, 370, 100, 20);
-		cancelButton.addActionListener(this);
-		this.add(cancelButton);
-		
-		clientCombo.setBounds(110, 40, 210, 20);
-		clientCombo.setFont(new Font("Arial", Font.PLAIN, 12));
-		clientCombo.addActionListener(this);
-		this.add(clientCombo);
-		
 		MaskFormatter dateFieldMask = null;
 		try {
 			dateFieldMask = new MaskFormatter("##/##/####");
@@ -170,14 +162,44 @@ public class List extends DefaultWindow implements MouseListener {
 		}
 		
 		dateField = new JFormattedTextField(dateFieldMask);
-		dateField.setBounds(125, 70, 120, 20);
 		dateField.setFont(new Font("Arial", Font.PLAIN, 12));
+		dateField.addKeyListener(this);
 		this.add(dateField);
 		
-		dateTodayBox.setBounds(255, 70, 120, 20);
 		dateTodayBox.setFont(new Font("Arial", Font.PLAIN, 12));
+		dateTodayBox.addActionListener(this);
 		this.add(dateTodayBox);
-
+		
+		this.apptList.setModel(apptModel);
+		this.apptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		apptScroll = new JScrollPane(apptList);
+		apptScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		this.add(apptScroll);
+		
+		if(isLoggedIn) {
+			dateField.setBounds(125, 70, 120, 20);
+			dateTodayBox.setBounds(255, 70, 120, 20);
+			apptScroll.setBounds(40, 100, 300, 240);
+			
+			for(Appointment a:this.getSys().getAllAppointments()) 
+				this.apptModel.addElement(a);
+			
+			this.clientCombo.addItem(new Client("Todos", "", null, null));
+			for(Client c:this.getSys().getAllClients())
+				this.clientCombo.addItem(c);
+			
+			clientCombo.setBounds(110, 40, 210, 20);
+			clientCombo.setFont(new Font("Arial", Font.PLAIN, 12));
+			clientCombo.addActionListener(this);
+			this.add(clientCombo);
+		}
+		else {
+			dateField.setBounds(125, 20, 120, 20);
+			dateTodayBox.setBounds(255, 20, 120, 20);
+			apptScroll.setBounds(40, 50, 300, 310);
+		}
+		
 	}
 
 	
@@ -224,8 +246,11 @@ public class List extends DefaultWindow implements MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		//Se usuário clicou voltar
 			if(e.getSource().equals(goBackButton)) {
-				new ControlPanel(getSys(), getDp());
 				this.dispose();
+				if(isLoggedIn)
+					new ControlPanel(getSys(), getDp());
+				else
+					new Login(getSys(), getDp());	
 			}
 			
 			//Se o usuário clicou editar
@@ -360,6 +385,43 @@ public class List extends DefaultWindow implements MouseListener {
 			
 			}
 			
+			else if(e.getSource().equals(this.dateTodayBox)) {
+				if(this.dateTodayBox.isSelected()) {
+					LocalDate ld = LocalDate.now();
+					//Converter dia, mês e ano
+					String dayValue = "";
+					String monthValue = "";
+					String yearValue = String.valueOf(ld.getYear());
+					
+					if(ld.getDayOfMonth() < 10) 
+						dayValue = "0" + ld.getDayOfMonth();
+					else
+						dayValue = String.valueOf(ld.getDayOfMonth());
+					
+					if(ld.getMonthValue() < 10) 
+						monthValue = "0" + ld.getMonthValue();
+					else
+						monthValue = String.valueOf(ld.getMonthValue());
+
+					this.apptModel.removeAllElements();
+					this.dateField.setText(dayValue + "/" + monthValue + "/" + yearValue);
+					this.dateField.setEnabled(false);
+					validateInputDate();
+				}
+				else {
+					this.dateField.setEnabled(true);
+					this.dateField.setText("");
+					
+					this.apptModel.removeAllElements();
+					if(isLoggedIn) {
+						for(Appointment a:this.getSys().getAllAppointments()) 
+							this.apptModel.addElement(a);
+					}
+				}
+				
+			}
+	
+			
 			
 		//Se usuário clicou os radioButtons do topo
 		else if(e.getSource().equals(this.colaboratorButton)) {
@@ -414,46 +476,100 @@ public class List extends DefaultWindow implements MouseListener {
 
 
 	protected void createLabels() {
+		clientLabel = new JLabel("Cliente");
+		dateLabel = new JLabel("Data");
+		
+		dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+		this.add(dateLabel);
+		
+		if(isLoggedIn) {
+			clientLabel.setBounds(50, 38, 190, 20);
+			clientLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+			this.add(clientLabel);
+			
+			dateLabel.setBounds(75, 68, 190, 20);
+		}
+		else 
+			dateLabel.setBounds(75, 18, 190, 20);
 	}
 
 
 	protected void createFields() {
-		this.colabFields();
-		this.setColabFieldsVis(true);
-		this.servFields();
-		this.setServiceFieldsVis(false);
-		this.apptFields();
-		this.setApptFieldsVis(false);
+		if(isLoggedIn) {
+			this.colabFields();
+			this.setColabFieldsVis(true);
+			this.servFields();
+			this.setServiceFieldsVis(false);
+			this.apptFields();
+			this.setApptFieldsVis(false);
+		}
+		else {
+			this.apptFields();
+			this.setApptFieldsVis(true);
+		}
+		
 	}
 
 
 	protected void createButtons() {
-		colaboratorButton = new JRadioButton("Colaboradores", true);
-		colaboratorButton.setBounds(15, 10, 110, 20);
-		colaboratorButton.addActionListener(this);
-		this.add(colaboratorButton);
-		
-		serviceButton = new JRadioButton("Serviços");
-		serviceButton.setBounds(150, 10, 100, 20);
-		serviceButton.addActionListener(this);
-		this.add(serviceButton);
-		
-		appointmentButton = new JRadioButton("Agendamentos");
-		appointmentButton.setBounds(255, 10, 120, 20);
-		appointmentButton.addActionListener(this);
-		this.add(appointmentButton);
-		
 		goBackButton.addActionListener(this);
 		this.add(goBackButton);
 		
-		editButton.setBounds(140, 370, 100, 20);
-		editButton.addActionListener(this);
-		this.add(editButton);
+		if(isLoggedIn) {
+			colaboratorButton = new JRadioButton("Colaboradores", true);
+			colaboratorButton.setBounds(15, 10, 110, 20);
+			colaboratorButton.addActionListener(this);
+			this.add(colaboratorButton);
+			
+			serviceButton = new JRadioButton("Serviços");
+			serviceButton.setBounds(150, 10, 100, 20);
+			serviceButton.addActionListener(this);
+			this.add(serviceButton);
+			
+			appointmentButton = new JRadioButton("Agendamentos");
+			appointmentButton.setBounds(255, 10, 120, 20);
+			appointmentButton.addActionListener(this);
+			this.add(appointmentButton);
+			
+			editButton.setBounds(140, 370, 100, 20);
+			editButton.addActionListener(this);
+			this.add(editButton);
+			
+			ButtonGroup radioRegister = new ButtonGroup();
+			radioRegister.add(colaboratorButton);
+			radioRegister.add(serviceButton);
+			radioRegister.add(appointmentButton);
+			
+			cancelButton.setBounds(250, 370, 100, 20);
+			cancelButton.addActionListener(this);
+			this.add(cancelButton);
+			
+		}
+		else
+			goBackButton.setBounds(90, 370, 200, 20);
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
-		ButtonGroup radioRegister = new ButtonGroup();
-		radioRegister.add(colaboratorButton);
-		radioRegister.add(serviceButton);
-		radioRegister.add(appointmentButton);
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getSource().equals(this.dateField) && e.getKeyCode() == KeyEvent.VK_ENTER) {
+			validateInputDate();
+		}
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
