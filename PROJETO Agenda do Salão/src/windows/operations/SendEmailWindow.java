@@ -147,8 +147,9 @@ public class SendEmailWindow extends DefaultWindow {
 						for(String s:otherEmails) {
 							Validation.validateEmail(s);
 							i++;
-							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
 						}
+						for(String s:otherEmails)
+							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
 					} catch (InvalidEmailException e1) {
 						JOptionPane.showMessageDialog(this, "Email " + i + " inválido", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
