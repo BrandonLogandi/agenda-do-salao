@@ -128,17 +128,16 @@ public class Bank extends DefaultWindow {
 		payButton.setBounds(120, 140, 150, 20);
 		payButton.setFont(new Font("Arial", Font.BOLD, 10));
 		payButton.addActionListener(this);
-		
-		if(pendingPayTotal == 0)
-			this.payButton.setEnabled(false);
 		this.add(payButton);
 		
 		payAllButton.setBounds(280, 140, 100, 20);
 		payAllButton.setFont(new Font("Arial", Font.BOLD, 10));
 		payAllButton.addActionListener(this);
 		
-		if(LocalDate.now().getDayOfMonth() != LocalDate.now().lengthOfMonth())
+		if(LocalDate.now().getDayOfMonth() != LocalDate.now().lengthOfMonth() || pendingPayTotal == 0)
 			payAllButton.setEnabled(false);
+		if(pendingPayTotal == 0)
+			this.payButton.setEnabled(false);
 		
 		this.add(payAllButton);
 		

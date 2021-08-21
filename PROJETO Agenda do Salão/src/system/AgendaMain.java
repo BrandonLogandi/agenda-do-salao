@@ -23,15 +23,15 @@ public class AgendaMain {
 		DataPersistence dp = new DataPersistence();
 		DataSystem sys = dp.loadSystem();
 	
-		if(sys.getAdmin() == null) 
-			new AdminRegistration(sys, dp);
-		else
-			new Login(sys, dp);
+//		if(sys.getAdmin() == null) 
+//			new AdminRegistration(sys, dp);
+//		else
+//			new Login(sys, dp);
 		
 //		new List(sys, dp, false);
 		
 //		new ControlPanel(sys, dp);
-//		new Register(sys, dp, false, false, 0);
+		new Register(sys, dp, null, null);
 //		new List(sys, dp, true);
 //		new Bank(sys, dp);
 //		new GenerateReport(sys, dp);

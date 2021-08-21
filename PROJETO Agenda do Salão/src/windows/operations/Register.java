@@ -98,6 +98,8 @@ public class Register extends DefaultWindow implements KeyListener  {
 	private JRadioButton sexMaleButton2 = new JRadioButton("Masculino", true);
 	private JRadioButton sexFemButton2 = new JRadioButton("Feminino");
 	
+	private JLabel timeTip = new JLabel("Formato 24 horas");
+	
 	private JComboBox<Service> serviceCombo = new JComboBox<>();
 	private JComboBox<Colaborator> colabCombo = new JComboBox<>();
 	
@@ -335,11 +337,9 @@ public class Register extends DefaultWindow implements KeyListener  {
 		
 		
 		nameField3.setBounds(100, 55, 220, 20);
-		nameField3.setFont(new Font("Arial", Font.PLAIN, 16));
 		this.add(nameField3);
 		
 		emailField2.setBounds(100, 95, 220, 20);
-		emailField2.setFont(new Font("Arial", Font.PLAIN, 16));
 		emailField2.addKeyListener(this);
 		this.add(emailField2);
 
@@ -521,6 +521,8 @@ public class Register extends DefaultWindow implements KeyListener  {
 		hourField.setVisible(b);
 		sexMaleButton2.setVisible(b);
 		sexFemButton2.setVisible(b);
+		
+		timeTip.setVisible(b);
 		
 		serviceCombo.setVisible(b);
 		colabCombo.setVisible(b);
@@ -857,6 +859,9 @@ public class Register extends DefaultWindow implements KeyListener  {
 
 	@Override
 	protected void createLabels() {
+		timeTip.setBounds(190, 325, 150, 40);
+		timeTip.setFont(new Font("Arial", Font.ITALIC, 10));
+		this.add(timeTip);
 	}
 
 
