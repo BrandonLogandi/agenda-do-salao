@@ -140,7 +140,6 @@ public class SendEmailWindow extends DefaultWindow {
 				}
 				
 			case 2:
-				goBack();
 				String[] otherEmails = this.otherEmailField.getText().split(" ");
 				int i = 0;
 					try {
@@ -150,6 +149,13 @@ public class SendEmailWindow extends DefaultWindow {
 						}
 						for(String s:otherEmails)
 							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
+						
+						if(i > 1)
+							JOptionPane.showMessageDialog(null, "Mensagens enviads");
+						else
+							JOptionPane.showMessageDialog(null, "Mensagem enviada");
+						
+						goBack();
 					} catch (InvalidEmailException e1) {
 						JOptionPane.showMessageDialog(this, "Email " + i + " inválido", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
