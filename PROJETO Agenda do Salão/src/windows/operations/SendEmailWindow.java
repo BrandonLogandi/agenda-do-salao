@@ -95,13 +95,16 @@ public class SendEmailWindow extends DefaultWindow {
 		this.add(sendButton);
 	}
 	
+	private void goBack() {
+		this.dispose();
+		new ControlPanel(getSys(), getDp());
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(goBackButton)) {
-			this.dispose();
-			new ControlPanel(getSys(), getDp());
-		}
+		if(e.getSource().equals(goBackButton)) 
+			goBack();
 		
 		else if(e.getSource().equals(whoToSendCombo)) {
 			switch(this.whoToSendCombo.getSelectedIndex()) {
@@ -121,26 +124,33 @@ public class SendEmailWindow extends DefaultWindow {
 			case 0:
 				if(this.getSys().getAllColaborators().size() == 0)
 					JOptionPane.showMessageDialog(this, "Não há nenhum colaborador cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
-				else
+				else {
+					goBack();
 					for(Colaborator c:this.getSys().getAllColaborators())
 						SendEmail.sendToColab(this.getSys().getAdmin(), c, this.subjectField.getText(), this.messageArea.getText());
+				}
 				
 			case 1:
 				if(this.getSys().getAllClients().size() == 0)
 					JOptionPane.showMessageDialog(this, "Não há nenhum cliente cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
-				else
+				else {
+					goBack();
 					for(Client cl:this.getSys().getAllClients())
 						SendEmail.sendToClient(this.getSys().getAdmin(), cl, this.subjectField.getText(), this.messageArea.getText());
+				}
 				
 			case 2:
-				this.dispose();
+				goBack();
 				String[] otherEmails = this.otherEmailField.getText().split(" ");
-				for(String s:otherEmails)
+				int i = 0;
 					try {
-						Validation.validateEmail(s);
-						SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
+						for(String s:otherEmails) {
+							Validation.validateEmail(s);
+							i++;
+							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
+						}
 					} catch (InvalidEmailException e1) {
-						JOptionPane.showMessageDialog(this, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(this, "Email " + i + " inválido", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
 			}
 		}
