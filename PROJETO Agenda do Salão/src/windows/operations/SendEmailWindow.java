@@ -129,6 +129,8 @@ public class SendEmailWindow extends DefaultWindow {
 					goBack();
 					for(Colaborator c:this.getSys().getAllColaborators())
 						SendEmail.sendToColab(this.getSys().getAdmin(), c, this.subjectField.getText(), this.messageArea.getText());
+					
+					JOptionPane.showMessageDialog(null, "Mensagens enviadas");
 				}
 				
 			case 1:
@@ -138,6 +140,8 @@ public class SendEmailWindow extends DefaultWindow {
 					goBack();
 					for(Client cl:this.getSys().getAllClients())
 						SendEmail.sendToClient(this.getSys().getAdmin(), cl, this.subjectField.getText(), this.messageArea.getText());
+					
+					JOptionPane.showMessageDialog(null, "Mensagens enviadas");
 				}
 				
 			case 2:
