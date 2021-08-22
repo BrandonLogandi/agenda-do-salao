@@ -85,8 +85,15 @@ public abstract class ReportGeneration {
 		pg.setAlignment(Element.ALIGN_CENTER);
 		doc.add(pg);
 			
-		dateBetween1 = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue(), dateBetween.getDayOfMonth() - 1);
-		dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue(), dateAnd.getDayOfMonth() + 1);
+		if(dateBetween.getDayOfMonth() == 1)
+			dateBetween1 = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue() - 1, dateBetween.getMonth().length(LocalDate.now().isLeapYear()));
+		else
+			dateBetween1 = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue(), dateBetween.getDayOfMonth() - 1);
+		
+		if(dateAnd.getDayOfMonth() == dateAnd.lengthOfMonth())
+			dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue() + 1, 1);
+		else
+			dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue() + 1, dateAnd.getDayOfMonth());
 		
 		
 		if(colab != null) {

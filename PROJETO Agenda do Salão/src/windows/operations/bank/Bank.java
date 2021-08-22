@@ -136,8 +136,10 @@ public class Bank extends DefaultWindow {
 		
 		if(LocalDate.now().getDayOfMonth() != LocalDate.now().lengthOfMonth())
 			payAllButton.setEnabled(false);
-		if(pendingPayTotal == 0)
-			this.payButton.setEnabled(false);
+		if(pendingPayTotal == 0) {
+			payButton.setEnabled(false);
+			payAllButton.setEnabled(false);
+		}
 		
 		this.add(payAllButton);
 		

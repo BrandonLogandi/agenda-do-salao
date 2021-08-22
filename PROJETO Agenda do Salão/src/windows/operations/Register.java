@@ -333,6 +333,9 @@ public class Register extends DefaultWindow implements KeyListener  {
 		priceLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		this.add(priceLabel);
 		
+		timeTip.setBounds(190, 325, 150, 40);
+		timeTip.setFont(new Font("Arial", Font.ITALIC, 10));
+		this.add(timeTip);
 		
 		nameField3.setBounds(100, 55, 220, 20);
 		this.add(nameField3);
@@ -856,10 +859,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 
 
 	@Override
-	protected void createLabels() {
-		timeTip.setBounds(190, 325, 150, 40);
-		timeTip.setFont(new Font("Arial", Font.ITALIC, 10));
-		this.add(timeTip);
+	protected void createLabels() {		
 	}
 
 

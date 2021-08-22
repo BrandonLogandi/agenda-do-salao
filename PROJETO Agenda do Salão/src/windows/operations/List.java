@@ -299,11 +299,12 @@ public class List extends DefaultWindow implements MouseListener, KeyListener {
 											for(Appointment a:c.getAppointments()) {
 												if(!a.isFinished() && !a.isCanceled())
 													a.setCanceled(true);
-												SendEmail.sendToClient(this.getSys().getAdmin(), a.getClient(),
-														"Caro(a) " + a.getClient().getName() + ", seu agendamento foi cancelado",
-														"Caro(a) " + a.getClient().getName() + ", \n\nLamentamos informar que o seguinte agendamento foi cancelado: "
-														+ "\n" + a.getService().getName()
-														+ "\nData " + a.getDate() + " " + a.getTime());
+												if(this.getSys().getAdmin().getGmailAccount() != null)
+													SendEmail.sendToClient(this.getSys().getAdmin(), a.getClient(),
+															"Caro(a) " + a.getClient().getName() + ", seu agendamento foi cancelado",
+															"Caro(a) " + a.getClient().getName() + ", \n\nLamentamos informar que o seguinte agendamento foi cancelado: "
+															+ "\n" + a.getService().getName()
+															+ "\nData " + a.getDate() + " " + a.getTime());
 												
 												this.getDp().saveSystem(getSys());
 											}
@@ -351,11 +352,12 @@ public class List extends DefaultWindow implements MouseListener, KeyListener {
 						
 								case JOptionPane.YES_OPTION:
 									a.setCanceled(true);
-									SendEmail.sendToClient(this.getSys().getAdmin(), a.getClient(),
-											"Caro(a) " + a.getClient().getName() + ", seu agendamento foi cancelado",
-											"Caro(a) " + a.getClient().getName() + ", \n\nLamentamos informar que o seguinte agendamento foi cancelado: "
-											+ "\n" + a.getService().getName()
-											+ "\n Data " + a.getDate() + " " + a.getTime());
+									if(this.getSys().getAdmin().getGmailAccount() != null)
+										SendEmail.sendToClient(this.getSys().getAdmin(), a.getClient(),
+												"Caro(a) " + a.getClient().getName() + ", seu agendamento foi cancelado",
+												"Caro(a) " + a.getClient().getName() + ", \n\nLamentamos informar que o seguinte agendamento foi cancelado: "
+												+ "\n" + a.getService().getName()
+												+ "\n Data " + a.getDate() + " " + a.getTime());
 									
 									this.getDp().saveSystem(getSys());
 									
@@ -550,8 +552,6 @@ public class List extends DefaultWindow implements MouseListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -566,8 +566,6 @@ public class List extends DefaultWindow implements MouseListener, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
