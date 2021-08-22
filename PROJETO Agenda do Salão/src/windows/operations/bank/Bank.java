@@ -17,6 +17,8 @@ import windows.operations.ControlPanel;
 
 public class Bank extends DefaultWindow {
 	
+	private Font arialBold10 = new Font("Arial", Font.BOLD, 10);
+	
 	private JLabel moneyInDaBank = new JLabel("Saldo: R$" + this.getSys().getSalonBank().getCash());
 	private JLabel pendingPay = new JLabel();
 	private float pendingPayTotal = 0;
@@ -91,7 +93,7 @@ public class Bank extends DefaultWindow {
 	}
 
 
-	@Override
+
 	protected void createLabels() {
 		JLabel bank = new JLabel("Caixa");
 		bank.setBounds(240, 0, 180, 40);
@@ -112,30 +114,27 @@ public class Bank extends DefaultWindow {
 	}
 
 
-	@Override
 	protected void createFields() {
-		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
 	protected void createButtons() {
 		goBackButton.setBounds(20, 140, 90, 20);
-		goBackButton.setFont(new Font("Arial", Font.BOLD, 10));
+		goBackButton.setFont(arialBold10);
 		goBackButton.addActionListener(this);
 		this.add(goBackButton);
 		
 		payButton.setBounds(120, 140, 150, 20);
-		payButton.setFont(new Font("Arial", Font.BOLD, 10));
+		payButton.setFont(arialBold10);
 		payButton.addActionListener(this);
 		this.add(payButton);
 		
 		payAllButton.setBounds(280, 140, 100, 20);
-		payAllButton.setFont(new Font("Arial", Font.BOLD, 10));
+		payAllButton.setFont(arialBold10);
 		payAllButton.addActionListener(this);
 		
-		if(LocalDate.now().getDayOfMonth() != LocalDate.now().lengthOfMonth() || pendingPayTotal == 0)
+		if(LocalDate.now().getDayOfMonth() != LocalDate.now().lengthOfMonth())
 			payAllButton.setEnabled(false);
 		if(pendingPayTotal == 0)
 			this.payButton.setEnabled(false);
@@ -143,7 +142,7 @@ public class Bank extends DefaultWindow {
 		this.add(payAllButton);
 		
 		reportButton.setBounds(390, 140, 110, 20);
-		reportButton.setFont(new Font("Arial", Font.BOLD, 10));
+		reportButton.setFont(arialBold10);
 		reportButton.addActionListener(this);
 		this.add(reportButton);
 	}

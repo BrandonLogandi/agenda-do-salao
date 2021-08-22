@@ -37,17 +37,17 @@ public class AdminRegistration extends DefaultWindow {
 	protected void createLabels() {
 		JLabel nome = new JLabel("Nome: ");
 		nome.setBounds(30, 40, 150, 40);
-		nome.setFont(new Font("Arial", Font.PLAIN, 18));
+		nome.setFont(getArial18());
 		this.add(nome);
 		
 		JLabel email = new JLabel("Email: ");
 		email.setBounds(32, 80, 150, 40);
-		email.setFont(new Font("Arial", Font.PLAIN, 18));
+		email.setFont(getArial18());
 		this.add(email);
 		
 		JLabel senha = new JLabel("Senha: ");
 		senha.setBounds(25, 120, 150, 40);
-		senha.setFont(new Font("Arial", Font.PLAIN, 18));
+		senha.setFont(getArial18());
 		this.add(senha);
 	}
 

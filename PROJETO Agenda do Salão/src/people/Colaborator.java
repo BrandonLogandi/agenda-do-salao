@@ -27,7 +27,6 @@ public class Colaborator extends Person {
 		this.prices = prices;
 	}
 	
-	@Override
 	public String toString() {
 		return this.getName() + ", " + this.getEmail();
 	}

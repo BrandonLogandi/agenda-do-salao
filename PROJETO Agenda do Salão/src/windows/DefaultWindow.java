@@ -1,5 +1,6 @@
 package windows;
 
+import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
@@ -8,6 +9,8 @@ import system.operations.DataPersistence;
 import system.operations.DataSystem;
 
 public abstract class DefaultWindow extends JFrame implements ActionListener {
+	
+	private Font arial18 = new Font("Arial", Font.PLAIN, 18);
 	
 	private DataSystem sys = null;
 	private DataPersistence dp = null;
@@ -38,6 +41,10 @@ public abstract class DefaultWindow extends JFrame implements ActionListener {
 
 	public void setDp(DataPersistence dp) {
 		this.dp = dp;
+	}
+
+	public Font getArial18() {
+		return arial18;
 	}
 
 	

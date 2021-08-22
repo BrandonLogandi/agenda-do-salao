@@ -76,7 +76,7 @@ public class LoginWithGoogle extends DefaultWindow {
 		
 		JLabel email = new JLabel("Email: ");
 		email.setBounds(80, 40, 150, 40);
-		email.setFont(new Font("Arial", Font.PLAIN, 18));
+		email.setFont(getArial18());
 		this.add(email);
 		
 		JLabel atgmail = new JLabel("@gmail.com");
@@ -86,7 +86,7 @@ public class LoginWithGoogle extends DefaultWindow {
 		
 		JLabel senha = new JLabel("Senha: ");
 		senha.setBounds(72, 70, 150, 40);
-		senha.setFont(new Font("Arial", Font.PLAIN, 18));
+		senha.setFont(getArial18());
 		this.add(senha);
 	}
 
