@@ -240,7 +240,7 @@ public abstract class Validation {
 	 * @param time a hora do agendamento.
 	 * @param apptEdit caso o usuário esteja editando um agendamento salvo previamente.
 	 * 
-	 * @throws InvalidTimeException caso dateTyped seja a data de hoje e time seja inválido (posterior a hora atual ou hora ou minuto inválidos), a menos que o usuário esteja editando um agendamento.
+	 * @throws Exception caso haja um choque de agendamentos do Colaborator ou do Client.
 	 */
 	public static void validateAppointment(Colaborator col, Client cl, Service s, LocalDate date, LocalTime time, Appointment apptEdit) throws Exception {
 		
