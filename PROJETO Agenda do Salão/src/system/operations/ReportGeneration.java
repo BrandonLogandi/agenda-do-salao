@@ -33,7 +33,7 @@ public abstract class ReportGeneration {
 		else if(sys.getSalonBank().getTransactions().isEmpty())
 			throw new Exception("Não foi realizada nenhuma transação no caixa do salão");
 
-		Document doc = new Document(PageSize.A4);
+		Document doc = new Document(PageSize.A4.rotate());
 		PdfPCell tipo = new PdfPCell(new Paragraph("Tipo"));
 		PdfPCell transacao = new PdfPCell(new Paragraph("Transação"));
 		PdfPCell data = new PdfPCell(new Paragraph("Data"));
@@ -97,7 +97,7 @@ public abstract class ReportGeneration {
 		
 		else {
 			for(Transaction t:sys.getSalonBank().getTransactions()) {
-				if(t.getDate().toLocalDate().isBefore(dateAnd) && t.getDate().toLocalDate().isAfter(dateBetween)) {
+				if(t.getDate().toLocalDate().isBefore(dateAnd1) && t.getDate().toLocalDate().isAfter(dateBetween1)) {
 					addInfoToTable(t);
 					
 					if(t.getReceiver() != null)
