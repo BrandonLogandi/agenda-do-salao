@@ -250,7 +250,7 @@ public class List extends DefaultWindow implements MouseListener, KeyListener {
 				if(isLoggedIn)
 					new ControlPanel(getSys(), getDp());
 				else
-					new Login(getSys(), getDp());	
+					new Login(getSys(), getDp(), false);	
 			}
 			
 			//Se o usuário clicou editar

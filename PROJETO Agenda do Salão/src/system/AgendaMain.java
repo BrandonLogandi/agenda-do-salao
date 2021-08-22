@@ -11,10 +11,10 @@ public class AgendaMain {
 		DataPersistence dp = new DataPersistence();
 		DataSystem sys = dp.loadSystem();
 	
-		if(sys.getAdmin() == null) 
+		if(sys.getAdmin() == null)
 			new AdminRegistration(sys, dp);
 		else
-			new Login(sys, dp);
+			new Login(sys, dp, false);
 
 	}
 

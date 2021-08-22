@@ -24,13 +24,16 @@ public class Login extends DefaultWindow {
 	private JButton loginButton = new JButton("Entrar");
 	private JButton viewApptsButton = new JButton("Ver agendamentos");
 	
+	boolean isFirstLogin = false;
 	boolean isLoggedIn = false;
 	
-	public Login(DataSystem sys, DataPersistence dp) {
+	public Login(DataSystem sys, DataPersistence dp, boolean isFirstLogin) {
 		super(sys, dp);
 		this.setSize(420, 200);
 		this.setTitle("Login");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.isFirstLogin = isFirstLogin;
 		
 		createLabels();
 		createButtons();
@@ -83,8 +86,23 @@ public class Login extends DefaultWindow {
 					&& new String(this.passwordField.getPassword()).equals(new String(this.getSys().getAdmin().getPassword()))) {
 				JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + this.getSys().getAdmin().getName());
 				isLoggedIn = true;
-				new ControlPanel(getSys(), getDp());
 				this.dispose();
+				
+				if(isFirstLogin) {
+					int response = JOptionPane.showConfirmDialog(this, "Para enviar emails pelo programa, é necessário entrar com uma conta Google."
+							+ "\nDeseja fazer isso agora?", "Entrar com conta Google",
+							JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					
+					switch(response) {
+					case JOptionPane.YES_OPTION:
+						new LoginWithGoogle(getSys(), getDp(), true);
+						break;
+					case JOptionPane.NO_OPTION:
+						new ControlPanel(getSys(), getDp());
+					}
+				}
+				else
+					new ControlPanel(getSys(), getDp());
 			}
 
 			else if(this.emailField.getText().equals(this.getSys().getAdmin().getEmail()) == false)
@@ -96,8 +114,12 @@ public class Login extends DefaultWindow {
 		}
 		
 		else if(e.getSource().equals(viewApptsButton)) {
-			new List(getSys(), getDp(), false);
-			this.dispose();
+			if(this.getSys().getAllAppointments().isEmpty())
+				JOptionPane.showMessageDialog(this, "Não há nenhum agendamento cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			else {
+				new List(getSys(), getDp(), false);
+				this.dispose();
+			}
 		}
 		
 	}

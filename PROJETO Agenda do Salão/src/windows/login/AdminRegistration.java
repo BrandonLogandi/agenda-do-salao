@@ -83,7 +83,7 @@ public class AdminRegistration extends DefaultWindow {
 			this.getSys().setAdmin(new Administrator(this.nameField.getText(), this.emailField.getText(), new String(this.passwordField.getPassword())));
 			this.getDp().saveSystem(this.getSys());
 			
-			new Login(this.getSys(), this.getDp());
+			new Login(this.getSys(), this.getDp(), true);
 			this.dispose();
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(this, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

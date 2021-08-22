@@ -49,7 +49,7 @@ public class ControlPanel extends DefaultWindow {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(logoffButton)) {
-			new Login(getSys(), getDp());
+			new Login(getSys(), getDp(), false);
 			this.dispose();
 		}
 		
@@ -68,7 +68,7 @@ public class ControlPanel extends DefaultWindow {
 
 			if(this.getSys().getAdmin().getGmailAccount() == null) {
 				JOptionPane.showMessageDialog(this, "Para enviar emails, é necessário entrar com uma conta Google primeiro", "", JOptionPane.WARNING_MESSAGE);
-				new LoginWithGoogle(getSys(), getDp());
+				new LoginWithGoogle(getSys(), getDp(), false);
 			}
 			
 			else

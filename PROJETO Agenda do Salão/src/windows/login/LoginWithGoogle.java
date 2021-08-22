@@ -23,16 +23,20 @@ import windows.operations.SendEmailWindow;
 
 public class LoginWithGoogle extends DefaultWindow {
 	
+	boolean isFirstLogin = false;
+	
 	private JTextField emailField = new JTextField();
 	private JPasswordField passwordField = new JPasswordField();
 	private JButton loginButton = new JButton("Entrar");
 	private JButton goBackButton = new JButton("Voltar");
 
-	public LoginWithGoogle(DataSystem sys, DataPersistence dp) {
+	public LoginWithGoogle(DataSystem sys, DataPersistence dp, boolean isFirstLogin) {
 		super(sys, dp);
 		this.setSize(420, 200);
 		this.setTitle("Login");
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		this.isFirstLogin = isFirstLogin;
 		
 		createLabels();
 		createButtons();
@@ -62,7 +66,10 @@ public class LoginWithGoogle extends DefaultWindow {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			} 
-			new SendEmailWindow(getSys(), getDp());
+			if(!isFirstLogin)
+				new SendEmailWindow(getSys(), getDp());
+			else
+				new ControlPanel(getSys(), getDp());
 			
 		}
 
