@@ -1,6 +1,5 @@
 package windows.operations;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
@@ -12,10 +11,8 @@ import javax.swing.JOptionPane;
 
 import people.Colaborator;
 import system.Appointment;
-import system.GmailAccount;
 import system.operations.DataPersistence;
 import system.operations.DataSystem;
-import system.operations.SendEmail;
 import windows.DefaultWindow;
 import windows.login.Login;
 import windows.login.LoginWithGoogle;

@@ -1,6 +1,5 @@
 package windows.login;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;

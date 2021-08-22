@@ -3,10 +3,7 @@ package windows.login;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
