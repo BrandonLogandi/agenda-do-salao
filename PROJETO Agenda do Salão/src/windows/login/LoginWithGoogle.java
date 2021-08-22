@@ -92,6 +92,9 @@ public class LoginWithGoogle extends DefaultWindow {
 
 	protected void createFields() {
 		emailField.setBounds(140, 50, 110, 20);
+		if(this.getSys().getAdmin().getEmail().contains("@gmail.com"))
+			emailField.setText(this.getSys().getAdmin().getEmail().replace("@gmail.com", ""));
+		
 		this.add(emailField);
 		
 		passwordField.setBounds(140, 80, 190, 20);
