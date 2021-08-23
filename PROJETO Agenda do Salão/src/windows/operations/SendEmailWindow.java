@@ -126,44 +126,40 @@ public class SendEmailWindow extends DefaultWindow {
 				if(this.getSys().getAllColaborators().size() == 0)
 					JOptionPane.showMessageDialog(this, "Não há nenhum colaborador cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
 				else {
-					goBack();
 					for(Colaborator c:this.getSys().getAllColaborators())
 						SendEmail.sendToColab(this.getSys().getAdmin(), c, this.subjectField.getText(), this.messageArea.getText());
+					goBack();
 					
-					JOptionPane.showMessageDialog(null, "Mensagens enviadas");
+				break;
 				}
 				
 			case 1:
 				if(this.getSys().getAllClients().size() == 0)
 					JOptionPane.showMessageDialog(this, "Não há nenhum cliente cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
 				else {
-					goBack();
 					for(Client cl:this.getSys().getAllClients())
 						SendEmail.sendToClient(this.getSys().getAdmin(), cl, this.subjectField.getText(), this.messageArea.getText());
+					goBack();
 					
-					JOptionPane.showMessageDialog(null, "Mensagens enviadas");
+				break;
 				}
 				
 			case 2:
 				String[] otherEmails = this.otherEmailField.getText().split(" ");
 				int i = 0;
 					try {
-						for(String s:otherEmails) {
+						for(String s:otherEmails) 
 							Validation.validateEmail(s);
-							i++;
-						}
+
 						for(String s:otherEmails)
 							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
-						
-						if(i > 1)
-							JOptionPane.showMessageDialog(null, "Mensagens enviadas");
-						else
-							JOptionPane.showMessageDialog(null, "Mensagem enviada");
-						
+
 						goBack();
 					} catch (InvalidEmailException e1) {
 						JOptionPane.showMessageDialog(this, "Email " + i + " inválido", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
+					
+				break;
 			}
 		}
 			

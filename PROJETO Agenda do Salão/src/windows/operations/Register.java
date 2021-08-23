@@ -615,7 +615,7 @@ public class Register extends DefaultWindow implements KeyListener  {
 					try {
 						if(colabEdit != null) {			
 							for(Appointment a:colabEdit.getAppointments())
-								if(!servicesArray.contains(a.getService()))
+								if(!servicesArray.contains(a.getService()) && !a.isCanceled() && !a.isFinished())
 									throw new Exception("Não é possível remover o servico " + a.getService().getID()
 											+ "\n" + colabEdit.getName() + " possui um agendamento ativo com esse serviço");
 
