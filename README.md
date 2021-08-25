@@ -1,3 +1,5 @@
-# PROJETO Agenda do Sal√£o
+# PROJETO Agenda do Sal„o
 
-[V√≠deo demonstrativo](https://www.youtube.com/watch?v=ERsKY66ndng)
+Para rodar este programa, È necess·rio baixar e instalar o Java SE SDK 16 [por aqui](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html)
+
+[VÌdeo demonstrativo](https://www.youtube.com/watch?v=ERsKY66ndng)
