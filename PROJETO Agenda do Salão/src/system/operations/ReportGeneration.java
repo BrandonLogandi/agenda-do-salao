@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -23,6 +26,7 @@ public abstract class ReportGeneration {
 	private static LocalDate dateBetween1 = null;
 	private static LocalDate dateAnd1 = null;
 	private static PdfPTable table = null;
+	private static Document doc = new Document(PageSize.A4.rotate());
 	
 	public static void generateReport(DataSystem sys, LocalDate dateBetween, LocalDate dateAnd, Colaborator colab) throws Exception {
 		if(colab != null) {
@@ -33,7 +37,6 @@ public abstract class ReportGeneration {
 		else if(sys.getSalonBank().getTransactions().isEmpty())
 			throw new Exception("Não foi realizada nenhuma transação no caixa do salão");
 
-		Document doc = new Document(PageSize.A4.rotate());
 		PdfPCell tipo = new PdfPCell(new Paragraph("Tipo"));
 		PdfPCell transacao = new PdfPCell(new Paragraph("Transação"));
 		PdfPCell data = new PdfPCell(new Paragraph("Data"));
@@ -61,39 +64,58 @@ public abstract class ReportGeneration {
 		doc.open();
 
 		String s = "Relatório de transações ";
-		Paragraph pg = new Paragraph();
 		
 		if(colab != null) {
 			if(colab.getGender().equals(Gender.MASCULINO))
-				pg = new Paragraph(s.concat("do colaborador: " + colab.getName()));
+				addParagraph(s.concat("do colaborador: " + colab.getName()));
 			else
-				pg = new Paragraph(s.concat("da colaboradora: " + colab.getName()));
+				addParagraph(s.concat("da colaboradora: " + colab.getName()));
 		}
 		else 
-			pg = new Paragraph(s.concat("do caixa do salão"));
-
-		pg.setAlignment(Element.ALIGN_CENTER);
-		doc.add(pg);
+			addParagraph(s.concat("do caixa do salão"));
 		
 		
-		pg = new Paragraph("Entre " + dateBetween.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + 
+		addParagraph("Entre " + dateBetween.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + 
 				" e " + dateAnd.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		pg.setAlignment(Element.ALIGN_CENTER);
-		doc.add(pg);
 		
-		pg = new Paragraph(" ");
-		pg.setAlignment(Element.ALIGN_CENTER);
-		doc.add(pg);
+		addParagraph(" ");
 			
-		if(dateBetween.getDayOfMonth() == 1)
-			dateBetween1 = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue() - 1, dateBetween.getMonth().length(LocalDate.now().isLeapYear()));
+		//Se o dia da primeira data for o primeiro dia do mês
+		if(dateBetween.getDayOfMonth() == 1) {
+			Month m = null;
+			int year = 0;
+			//Se o mês da primeira data for Janeiro, setar o mês para Dezembro e diminuir o valor do ano em 1
+			if(dateBetween.getMonthValue() == 1) {
+				m = Month.DECEMBER;
+				year = dateBetween.getYear() - 1;
+			}
+			else {
+				m = Month.of(dateBetween.getMonthValue() - 1);
+				year = dateBetween.getYear();
+			}
+			
+			System.out.println(Year.isLeap(year));
+			dateBetween1 = LocalDate.of(year, m, m.length(Year.isLeap(year)));
+		}
 		else
 			dateBetween1 = LocalDate.of(dateBetween.getYear(), dateBetween.getMonthValue(), dateBetween.getDayOfMonth() - 1);
 		
-		if(dateAnd.getDayOfMonth() == dateAnd.lengthOfMonth())
-			dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue() + 1, 1);
+		System.out.println(dateBetween1.getDayOfMonth() + "/" + dateBetween1.getMonthValue() + "/" + dateBetween1.getYear());
+		
+		
+		
+		//Se o dia da segunda data for o último dia do mês
+		if(dateAnd.getDayOfMonth() == dateAnd.lengthOfMonth()) {
+			//Se o mês da segunda data for Dezembro, setar o mês e dia para 1 e aumentar o valor do ano em 1
+			if(dateAnd.getMonthValue() == 12)
+				dateAnd1 = LocalDate.of(dateAnd.getYear() + 1, Month.JANUARY, 1);
+			else
+				dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue() + 1, 1);
+		}
 		else
-			dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue() + 1, dateAnd.getDayOfMonth());
+			dateAnd1 = LocalDate.of(dateAnd.getYear(), dateAnd.getMonthValue(), dateAnd.getDayOfMonth() + 1);
+		
+		System.out.println(dateAnd1.getDayOfMonth() + "/" + dateAnd1.getMonthValue() + "/" + dateAnd1.getYear());
 		
 		
 		if(colab != null) {
@@ -118,10 +140,16 @@ public abstract class ReportGeneration {
 		doc.add(table);
 		doc.close();
 		
-		Desktop desktop = Desktop.getDesktop();
-		desktop.open(new File("relatorio.pdf"));
+		if(Desktop.isDesktopSupported())
+			Desktop.getDesktop().open(new File("relatorio.pdf"));
 	}
 	
+	
+	private static void addParagraph(String txt) throws DocumentException {
+		Paragraph pg = new Paragraph(txt);
+		pg.setAlignment(Element.ALIGN_CENTER);
+		doc.add(pg);
+	}
 	
 	private static void addInfoToTable(Transaction t) {
 			if(t.getMoney() < 0)

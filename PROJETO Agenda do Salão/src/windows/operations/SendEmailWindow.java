@@ -146,10 +146,12 @@ public class SendEmailWindow extends DefaultWindow {
 				
 			case 2:
 				String[] otherEmails = this.otherEmailField.getText().split(" ");
-				int i = 0;
+				int i = 1;
 					try {
-						for(String s:otherEmails) 
+						for(String s:otherEmails) {
 							Validation.validateEmail(s);
+							i++;
+						}
 
 						for(String s:otherEmails)
 							SendEmail.sendToOther(this.getSys().getAdmin(), s, this.subjectField.getText(), this.messageArea.getText());
